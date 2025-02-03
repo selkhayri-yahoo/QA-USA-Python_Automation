@@ -1,2 +1,5 @@
-selenium==4.25.0
-pytest==8.3.3
+#
+# The required python libraries and tool that need to be install and their corresponding versions
+
+selenium==4.25.0   # Version of the selenium suite to install
+pytest==8.3.3       # Version of pytest to install
