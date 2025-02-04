@@ -16,6 +16,7 @@ class TestUrbanRoutes:
     # This is the class constructor. It establishes the connection with the Urban Routes web service
     @classmethod
     def setup_class(cls, urban_routes_server):
+        # Add in S8
         # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
         # and print a message accordingly
         if helpers.is_url_reachable(urban_routes_server):
@@ -93,7 +94,7 @@ class TestUrbanRoutes:
         # Add in S8
         print("function created for set route")
 
-        # Iterate through the two icecream orders and do something ...
+        # A varioble should be defined and then loop should iterate twice ...
         for i in range(2):
             # Add in S8
             pass
