@@ -1,5 +1,4 @@
-import data
-import helpersX
+import helpers
 
 '''
 Class TestUrnanRoutes
@@ -21,8 +20,6 @@ class TestUrbanRoutes:
         # and print a message accordingly
         if helpers.is_url_reachable(urban_routes_server):
             print("Connected to the Urban Routes server")
-            # Set class variable urban_routes_server to the passed in parameter
-            cls.urban_routes_server = urban_routes_server
         else:
             # Connection to Urban Routes web service failed
             print("Cannot connect to Urban Routes. Check the server is on and still running")
@@ -112,7 +109,3 @@ class TestUrbanRoutes:
         # Add in S8
         print("function created for set route")
         pass
-
-
-t = TestUrbanRoutes()
-t.setup_class(data.URBAN_ROUTES_URL)
