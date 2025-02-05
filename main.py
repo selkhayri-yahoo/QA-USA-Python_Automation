@@ -5,9 +5,6 @@ import helpers   # import the helpers.py file which contains networking function
 Class TestUrnanRoutes
 
 This class is used to test the functionality of the Urban Routes web app
-
-Class variables
-urban_routes_server (str): the url of the Urban Routes server web service under test
 '''
 class TestUrbanRoutes:
     # Name: setup_class
