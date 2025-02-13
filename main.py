@@ -1,8 +1,10 @@
 import data      # import the data.py file which contains the constant values
 import helpers   # import the helpers.py file which contains networking functions
 
+from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 '''
-Class TestUrnanRoutes
+Class TestUrbanRoutes
 
 This class is used to test the functionality of the Urban Routes web app
 '''
@@ -15,6 +17,11 @@ class TestUrbanRoutes:
     @classmethod
     def setup_class(cls):
         # Add in S8
+        # do not modify - we need additional logging enabled in order to retrieve phone confirmation code
+        capabilities = DesiredCapabilities.CHROME
+        capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
+        cls.driver = webdriver.Chrome()
+
         # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
         # and print a message accordingly
         if helpers.is_url_reachable(data.URBAN_ROUTES_URL):
@@ -109,3 +116,12 @@ class TestUrbanRoutes:
         # Add in S8
         print("function created for car_search_model_appears")
         pass
+
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit()
+
+
+test_urban_routes = TestUrbanRoutes()
+test_urban_routes.setup_class()
+test_urban_routes.teardown_class()
