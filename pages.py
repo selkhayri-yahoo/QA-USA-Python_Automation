@@ -7,14 +7,21 @@ class UrbanRoutesPage:
     CUSTOM_OPTION_LOCATOR = (By.XPATH, '//div[text()="Custom"]')
     OPTIMAL_OPTION_LOCATOR = (By.XPATH, '//div[text()="Optimal"]')
     FASTEST_OPTION_LOCATOR = (By.XPATH, '//div[text()="Fastest"]')
-    SCOOTER_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/scooter.cf9bb57e.svg"]')
-    SCOOTER_TEXT_LOCATOR = (By.XPATH, '//div[@class="results-text"]//div[@class="text"]')
+
+    CAR_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/car.8a2b1ff5.svg"]')
+    WALK_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/walk.d33bf83c.svg"]')
+    TAXI_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/taxi.9a02abc6.svg"]')
     BIKE_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/bike.fb41c762.svg"]')
-    BIKE_TEXT_LOCATOR = SCOOTER_TEXT_LOCATOR
+    SCOOTER_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/scooter.cf9bb57e.svg"]')
     DRIVE_ICON_LOCATOR = (By.XPATH, '//div[@class="type drive"]')
+
+    RESULTS_TEXT_LOCATOR = (By.XPATH, '//div[@class="results-text"]//div[@class="text"]')
+    DURATION_TEXT_LOCATOR = (By.CSS_SELECTOR, "div.results-text>div.duration")
     BOOK_BUTTON_LOCATOR = (By.XPATH, '//div[@class="results-text"]/button[@class="button round"]')
     CAMPING_CARD_LOCATOR = (By.XPATH, '//div[text()="Camping"]/..')     #'//div[@class="tariff-cards"]/div[@class="tcard"]'
+
     CAR_MAKE_LOCATOR = (By.XPATH, '//div[@class="drive-preview-title"]')
+
     LICENCE_ADD_LOCATOR = (By.XPATH, '//div[@class="workflow"]//div[@class="np-button"]')
     FIRST_NAME_LOCATOR = (By.ID, 'firstName')
     LAST_NAME_LOCATOR = (By.ID, 'lastName')
@@ -22,7 +29,6 @@ class UrbanRoutesPage:
     LICENCE_NUMBER_LOCATOR = (By.ID, 'number')
     ADD_BUTTON_LOCATOR = (By.XPATH, '//div[@class="rights-buttons"]/button[text()="Add"]')
     POPUP_WINDOW_LOCATOR = (By.XPATH, '//div[@class="section active"]//div[@class="head"]')
-    DURATION_TEXT_LOCATOR = (By.CSS_SELECTOR, "div.results-text>div.duration")
 
     def __init__(self, driver):
         self.driver = driver
@@ -52,14 +58,6 @@ class UrbanRoutesPage:
     def get_scooter_text(self):
         # Return the "Scooter" text
         return self.driver.find_element(*self.SCOOTER_TEXT_LOCATOR).text
-
-    def click_bike_icon(self):
-        # Click bike Icon
-        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
-
-    def get_bike_icon(self):
-        # Click Bike Icon
-        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
 
     def get_bike_text(self):
         # Return the "Bike" text
@@ -102,3 +100,20 @@ class UrbanRoutesPage:
 
     def get_duration_text(self):
         return self.driver.find_element(*self.DURATION_TEXT_LOCATOR).text
+
+    def click_car_icon(self):
+        self.driver.find_element(*self.CAR_ICON_LOCATOR).click()
+
+    def click_walk_icon(self):
+        self.driver.find_element(*self.WALK_ICON_LOCATOR).click()
+
+    def click_taxi_icon(self):
+        self.driver.find_element(*self.TAXI_ICON_LOCATOR).click()
+
+    def click_bike_icon(self):
+        # Click bike Icon
+        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
+
+    def click_bike_icon(self):
+        # Click Bike Icon
+        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
