@@ -11,6 +11,7 @@ class UrbanRoutesPage:
     CAR_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/car.8a2b1ff5.svg"]')
     WALK_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/walk.d33bf83c.svg"]')
     TAXI_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/taxi.9a02abc6.svg"]')
+    TAXI_ICON_LOCATOR_ACTIVE = (By.XPATH, '//img[@src="/static/media/taxi-active.b0be3054.svg"]')
     BIKE_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/bike.fb41c762.svg"]')
     SCOOTER_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/scooter.cf9bb57e.svg"]')
     DRIVE_ICON_LOCATOR = (By.XPATH, '//div[@class="type drive"]')
@@ -18,7 +19,7 @@ class UrbanRoutesPage:
     RESULTS_TEXT_LOCATOR = (By.XPATH, '//div[@class="results-text"]//div[@class="text"]')
     DURATION_TEXT_LOCATOR = (By.CSS_SELECTOR, "div.results-text>div.duration")
     BOOK_BUTTON_LOCATOR = (By.XPATH, '//div[@class="results-text"]/button[@class="button round"]')
-    CAMPING_CARD_LOCATOR = (By.XPATH, '//div[text()="Camping"]/..')     #'//div[@class="tariff-cards"]/div[@class="tcard"]'
+    CAMPING_CARD_LOCATOR = (By.XPATH, '//div[text()="Camping"]/..')
 
     CAR_MAKE_LOCATOR = (By.XPATH, '//div[@class="drive-preview-title"]')
 
@@ -29,6 +30,15 @@ class UrbanRoutesPage:
     LICENCE_NUMBER_LOCATOR = (By.ID, 'number')
     ADD_BUTTON_LOCATOR = (By.XPATH, '//div[@class="rights-buttons"]/button[text()="Add"]')
     POPUP_WINDOW_LOCATOR = (By.XPATH, '//div[@class="section active"]//div[@class="head"]')
+
+    CALL_TAXI_LOCATOR = (By.CSS_SELECTOR, "div.results-text>button.button")
+
+    BUSINESS_TARIFF_CARD = (By.XPATH, '//img[@alt="Business"]')
+    SLEEPY_TARIFF_CARD = (By.XPATH, '//img[@alt="Sleepy"]')
+    HOLIDAY_TARIFF_CARD = (By.XPATH, '//img[@alt="Holiday"]')
+    TALKING_TARIFF_CARD = (By.XPATH, '//img[@alt="Talking"]')
+    SUPPORTIVE_TARIFF_CARD = (By.XPATH, '//img[@alt="Supportive"]')
+    GLOSSY_TARIFF_CARD = (By.XPATH, '//img[@alt="Glossy"]')
 
     def __init__(self, driver):
         self.driver = driver
@@ -55,13 +65,9 @@ class UrbanRoutesPage:
         # Click Scooter Icon
         self.driver.find_element(*self.SCOOTER_ICON_LOCATOR).click()
 
-    def get_scooter_text(self):
-        # Return the "Scooter" text
-        return self.driver.find_element(*self.SCOOTER_TEXT_LOCATOR).text
-
-    def get_bike_text(self):
-        # Return the "Bike" text
-        return self.driver.find_element(*self.BIKE_TEXT_LOCATOR).text
+    def get_results_text(self):
+        # Return the results text
+        return self.driver.find_element(*self.RESULTS_TEXT_LOCATOR).text
 
     def click_drive_icon(self):
         # Click Drive Icon
@@ -108,12 +114,33 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.WALK_ICON_LOCATOR).click()
 
     def click_taxi_icon(self):
-        self.driver.find_element(*self.TAXI_ICON_LOCATOR).click()
+        try:
+            self.driver.find_element(*self.TAXI_ICON_LOCATOR).click()
+        except:
+            self.driver.find_element(*self.TAXI_ICON_LOCATOR_ACTIVE).click()
+
 
     def click_bike_icon(self):
         # Click bike Icon
         self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
 
-    def click_bike_icon(self):
-        # Click Bike Icon
-        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
+    def click_call_taxi_button(self):
+        self.driver.find_element(*self.CALL_TAXI_LOCATOR).click()
+
+    def click_business_tariff_card(self):
+        self.driver.find_element(*self.BUSINESS_TARIFF_CARD).click()
+
+    def click_sleepy_tariff_card(self):
+        self.driver.find_element(*self.SLEEPY_TARIFF_CARD).click()
+
+    def click_holiday_tariff_card(self):
+        self.driver.find_element(*self.HOLIDAY_TARIFF_CARD).click()
+
+    def click_talking_tariff_card(self):
+        self.driver.find_element(*self.TALKING_TARIFF_CARD).click()
+
+    def click_supportive_tariff_card(self):
+        self.driver.find_element(*self.SUPPORTIVE_TARIFF_CARD).click()
+
+    def click_glossy_tariff_card(self):
+        self.driver.find_element(*self.GLOSSY_TARIFF_CARD).click()

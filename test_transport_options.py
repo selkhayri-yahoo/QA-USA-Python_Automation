@@ -6,42 +6,45 @@ import data
 
 driver = webdriver.Chrome()
 
-driver.get(data.URBAN_ROUTES_URL)
+try:
+    driver.get(data.URBAN_ROUTES_URL)
 
-urban_routes_page = UrbanRoutesPage(driver)
+    urban_routes_page = UrbanRoutesPage(driver)
 
-urban_routes_page.enter_from_location("East")
-urban_routes_page.enter_to_location("1300")
+    urban_routes_page.enter_from_location("East")
+    urban_routes_page.enter_to_location("1300")
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_custom_option()
+    urban_routes_page.click_custom_option()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_car_icon()
+    urban_routes_page.click_car_icon()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_walk_icon()
+    urban_routes_page.click_walk_icon()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_taxi_icon()
+    urban_routes_page.click_taxi_icon()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_bike_icon()
+    urban_routes_page.click_bike_icon()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_scooter_icon()
+    urban_routes_page.click_scooter_icon()
 
-time.sleep(2)
+    time.sleep(2)
 
-urban_routes_page.click_drive_icon()
+    urban_routes_page.click_drive_icon()
 
-time.sleep(4)
+    time.sleep(4)
 
-driver.quit()
+finally:
+
+    driver.quit()
 
