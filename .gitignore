@@ -1,8 +1,5 @@
 .idea/
 .venv/
 __pycache__/
-*.odt
-*.ods
-*.ods#
-*.txt
+.work/
 
