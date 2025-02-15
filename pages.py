@@ -46,6 +46,10 @@ class UrbanRoutesPage:
     SMS_CODE_FIELD = (By.XPATH, '//input[@id="code"]')
     SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
 
+    PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
+    """
+    #root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.pp-button.filled
+    """
 
     def __init__(self, driver):
         self.driver = driver
@@ -162,20 +166,12 @@ class UrbanRoutesPage:
         #self.driver.find_elements(*self.PHONE_NUMBER_NEXT_BUTTON)[0].click()
         self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
 
-
-    # def disable_overlay_div(self):
-    #    overlay_div = self.driver.find_element(*self.OVERLAY_DIV)
-    #    self.driver.execute_script("arguments[0].setAttribute('disabled', 'disabled')", overlay_div)
-
-    #def remove_overlay_div(self):
-    #    self.driver.execute_script("""
-    #       var l = document.getElementsByClassName("overlay")[0];
-    #       l.parentNode.removeChild(l);
-    #    """)
-
     def set_sms_code(self, code):
         self.driver.find_element(*self.SMS_CODE_FIELD).send_keys(code)
 
     def click_sms_code_confirm(self):
         self.driver.find_element(*self.SMS_CONFIRM_BUTTON).click()
+
+    def click_payment_method(self):
+        self.driver.find_element(*self.PAYMENT_METHOD).click()
 
