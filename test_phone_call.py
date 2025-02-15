@@ -36,6 +36,19 @@ try:
 
     time.sleep(3)
 
-finally:
+    urban_routes_page.click_phone_number_next()
 
+    time.sleep(3)
+
+    urban_routes_page.set_sms_code("4862")
+
+    time.sleep(3)
+
+    urban_routes_page.click_sms_code_confirm()
+
+    time.sleep(5)
+
+
+finally:
+    print("Done")
     driver.quit()

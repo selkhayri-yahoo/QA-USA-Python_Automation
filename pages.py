@@ -42,7 +42,10 @@ class UrbanRoutesPage:
 
     PHONE_NUMBER_BUTTON = (By.XPATH, '//div[@class="workflow"]/div[@class="workflow-subcontainer"]/div[@class="tariff-picker shown"]/div[@class="form"]/div[@class="np-button"]')
     PHONE_NUMBER_FIELD = (By.XPATH, '//input[@name="phone"]')
-    
+    PHONE_NUMBER_NEXT_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section > form > div.buttons > button.button.full') #
+    SMS_CODE_FIELD = (By.XPATH, '//input[@id="code"]')
+    SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
+
 
     def __init__(self, driver):
         self.driver = driver
@@ -154,3 +157,25 @@ class UrbanRoutesPage:
 
     def set_phone_number_text(self, phone_number):
         self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
+
+    def click_phone_number_next(self):
+        #self.driver.find_elements(*self.PHONE_NUMBER_NEXT_BUTTON)[0].click()
+        self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
+
+
+    # def disable_overlay_div(self):
+    #    overlay_div = self.driver.find_element(*self.OVERLAY_DIV)
+    #    self.driver.execute_script("arguments[0].setAttribute('disabled', 'disabled')", overlay_div)
+
+    #def remove_overlay_div(self):
+    #    self.driver.execute_script("""
+    #       var l = document.getElementsByClassName("overlay")[0];
+    #       l.parentNode.removeChild(l);
+    #    """)
+
+    def set_sms_code(self, code):
+        self.driver.find_element(*self.SMS_CODE_FIELD).send_keys(code)
+
+    def click_sms_code_confirm(self):
+        self.driver.find_element(*self.SMS_CONFIRM_BUTTON).click()
+
