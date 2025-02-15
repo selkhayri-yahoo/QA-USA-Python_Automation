@@ -40,6 +40,10 @@ class UrbanRoutesPage:
     SUPPORTIVE_TARIFF_CARD = (By.XPATH, '//img[@alt="Supportive"]')
     GLOSSY_TARIFF_CARD = (By.XPATH, '//img[@alt="Glossy"]')
 
+    PHONE_NUMBER_BUTTON = (By.XPATH, '//div[@class="workflow"]/div[@class="workflow-subcontainer"]/div[@class="tariff-picker shown"]/div[@class="form"]/div[@class="np-button"]')
+    PHONE_NUMBER_FIELD = (By.XPATH, '//input[@name="phone"]')
+    
+
     def __init__(self, driver):
         self.driver = driver
 
@@ -144,3 +148,9 @@ class UrbanRoutesPage:
 
     def click_glossy_tariff_card(self):
         self.driver.find_element(*self.GLOSSY_TARIFF_CARD).click()
+
+    def click_phone_number_button(self):
+        self.driver.find_element(*self.PHONE_NUMBER_BUTTON).click()
+
+    def set_phone_number_text(self, phone_number):
+        self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
