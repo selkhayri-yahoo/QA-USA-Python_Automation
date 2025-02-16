@@ -1,4 +1,6 @@
+from selenium import webdriver
 from selenium.webdriver.common.by import By
+import data
 
 class UrbanRoutesPage:
     # Locators as class attributes
@@ -47,12 +49,16 @@ class UrbanRoutesPage:
     SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
 
     PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
-    """
-    #root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.pp-button.filled
-    """
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self):
+        self.driver = webdriver.Chrome()
+
+    def driver_init(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get(data.URBAN_ROUTES_URL)
+
+    def driver_quit(self):
+        self.driver.quit()
 
     def enter_from_location(self, from_text):
         # Enter From
