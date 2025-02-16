@@ -49,6 +49,19 @@ class UrbanRoutesPage:
     SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
 
     PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
+    PAYMENT_METHOD_CC_LOCATOR = (By.XPATH, '//div[@id="root"]/div[@class="app"]/div[@class="payment-picker open"]/div[@class="modal"]/div[@class="section active"]\
+/div[@class="pp-selector"]/div[@class="pp-row disabled"]')
+
+    ADD_CARD_CC_NUM = (By.ID, 'number')
+    ADD_CARD_CC_CODE = (By.CLASS_NAME, "card-input")  # [1]
+
+    ADD_CARD_SUBMIT_FORM = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal.unusual > div.section.active.unusual > form")
+
+    SELECTED_PAYMENT_METHOD = (By.CSS_SELECTOR, "#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.pp-button.filled > div.pp-value > div.pp-value-text")
+    SELECT_CASH = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > div.pp-selector > div:nth-child(1) > div.pp-title")
+    SELECT_CC = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > div.pp-selector > div:nth-child(3) > div.pp-checkbox")
+
+    PAYMENT_DIALOG_CLOSE = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > button")
 
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -180,4 +193,29 @@ class UrbanRoutesPage:
 
     def click_payment_method(self):
         self.driver.find_element(*self.PAYMENT_METHOD).click()
+
+    def click_add_credit_card(self):
+        self.driver.find_elements(*self.PAYMENT_METHOD_CC_LOCATOR)[-1].click()
+
+    def set_credit_card_text(self, credit_card_text):
+        self.driver.find_element(*self.ADD_CARD_CC_NUM).send_keys(credit_card_text)
+
+    def set_credit_card_code(self, code):
+        self.driver.find_elements(*self.ADD_CARD_CC_CODE)[1].send_keys(code)
+
+    def submit_credit_card_add(self):
+        self.driver.find_element(*self.ADD_CARD_SUBMIT_FORM).submit()
+
+    def select_cash_payment(self):
+        self.driver.find_element(*self.SELECT_CASH).click()
+
+    def select_cc_payment(self):
+        self.driver.find_element(*self.SELECT_CC).click()
+
+    def get_selected_payment_method(self):
+        return self.driver.find_element(*self.SELECTED_PAYMENT_METHOD).text
+
+    def close_payment_dialog(self):
+        self.driver.find_element(*self.PAYMENT_DIALOG_CLOSE).click()
+
 
