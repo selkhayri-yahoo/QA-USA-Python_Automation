@@ -47,6 +47,7 @@ class UrbanRoutesPage:
     PHONE_NUMBER_NEXT_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section > form > div.buttons > button.button.full') #
     SMS_CODE_FIELD = (By.XPATH, '//input[@id="code"]')
     SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
+    SMS_CLOSE_BUTTON = (By.CSS_SELECTOR, "#root > div > div.number-picker.open > div.modal > div:nth-child(1) > button")
 
     PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
     PAYMENT_METHOD_CC_LOCATOR = (By.XPATH, '//div[@id="root"]/div[@class="app"]/div[@class="payment-picker open"]/div[@class="modal"]/div[@class="section active"]\
@@ -63,33 +64,50 @@ class UrbanRoutesPage:
 
     PAYMENT_DIALOG_CLOSE = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > button")
 
-    def __init__(self):
-        self.driver = webdriver.Chrome()
+    MESSAGE_TO_DRIVER = (By.ID, "comment")
 
-    def driver_init(self):
-        self.driver = webdriver.Chrome()
-        self.driver.get(data.URBAN_ROUTES_URL)
+    def __init__(self, driver):
+        self.driver = driver
 
-    def driver_quit(self):
-        self.driver.quit()
+    #def driver_init(self):
+    #    self.driver = webdriver.Chrome()
+    #    self.driver.get(data.URBAN_ROUTES_URL)
+
+    #def driver_quit(self):
+    #    self.driver.quit()
 
     def enter_from_location(self, from_text):
         # Enter From
         self.driver.find_element(*self.FROM_LOCATOR).send_keys(from_text)
 
+    def get_from_location(self):
+        return self.driver.find_element(*self.FROM_LOCATOR).get_attribute("value")
+
     def enter_to_location(self, to_text):
         # Enter To
         self.driver.find_element(*self.TO_LOCATOR).send_keys(to_text)
+
+    def get_to_location(self):
+        return self.driver.find_element(*self.TO_LOCATOR).get_attribute("value")
 
     def click_custom_option(self):
         # Click Custom
         self.driver.find_element(*self.CUSTOM_OPTION_LOCATOR).click()
 
+    def get_custom_option_status(self):
+        return self.driver.find_element(*self.CUSTOM_OPTION_LOCATOR).get_attribute("class")
+
     def click_optimal_option(self):
         self.driver.find_element(*self.OPTIMAL_OPTION_LOCATOR).click()
 
+    def get_optimal_option_status(self):
+        return self.driver.find_element(*self.OPTIMAL_OPTION_LOCATOR).get_attribute("class")
+
     def click_fastest_option(self):
         self.driver.find_element(*self.FASTEST_OPTION_LOCATOR).click()
+
+    def get_fastest_option_status(self):
+        return self.driver.find_element(*self.FASTEST_OPTION_LOCATOR).get_attribute("class")
 
     def click_scooter_icon(self):
         # Click Scooter Icon
@@ -181,6 +199,9 @@ class UrbanRoutesPage:
     def set_phone_number_text(self, phone_number):
         self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
 
+    def get_phone_number_text(self):
+        return self.driver.find_element(*self.PHONE_NUMBER_FIELD).text
+
     def click_phone_number_next(self):
         #self.driver.find_elements(*self.PHONE_NUMBER_NEXT_BUTTON)[0].click()
         self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
@@ -188,8 +209,14 @@ class UrbanRoutesPage:
     def set_sms_code(self, code):
         self.driver.find_element(*self.SMS_CODE_FIELD).send_keys(code)
 
+    def get_sms_code_text(self):
+        return self.driver.find_element(*self.SMS_CODE_FIELD).text
+
     def click_sms_code_confirm(self):
         self.driver.find_element(*self.SMS_CONFIRM_BUTTON).click()
+
+    def click_sms_code_close(self):
+        self.driver.find_element(*self.SMS_CLOSE_BUTTON).click()
 
     def click_payment_method(self):
         self.driver.find_element(*self.PAYMENT_METHOD).click()
@@ -218,4 +245,8 @@ class UrbanRoutesPage:
     def close_payment_dialog(self):
         self.driver.find_element(*self.PAYMENT_DIALOG_CLOSE).click()
 
+    def send_message_to_driver(self, message):
+        self.driver.find_element(*self.MESSAGE_TO_DRIVER).send_keys(message)
 
+    def get_message_to_driver(self):
+        return self.driver.find_element(*self.MESSAGE_TO_DRIVER).get_attribute('value')

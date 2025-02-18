@@ -1,10 +1,8 @@
-from selection_helper import SelectionHelper
+from selection_helper_library import SelectionHelper
 import time
 
 # initialize SelectionHelper class
 select_helper = SelectionHelper()
-
-
 """
 # t"est route options
 time.sleep(3)
@@ -20,7 +18,7 @@ select_helper.reset_driver()
 select_helper.test_tariff_cards()
 
 time.sleep(2)
-"""
+
 # test payment method
 
 select_helper.test_add_payment_method()
@@ -28,7 +26,7 @@ time.sleep(4)
 select_helper.test_selected_payment_method()
 time.sleep(4)
 
-"""
+
 # test phone number / sms
 select_helper.reset_driver()
 select_helper.test_phone_number_sms()
@@ -42,6 +40,9 @@ select_helper.test_commuting_options()
 time.sleep(2)
 """
 
+# test send message to driver
+select_helper.test_send_message_to_driver()
 
+time.sleep(2)
 
 

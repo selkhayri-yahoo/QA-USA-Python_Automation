@@ -29,6 +29,20 @@ class SelectionHelper:
         self.urban_routes_page.enter_from_location("East")
         self.urban_routes_page.enter_to_location("1300")
 
+    """
+    def set_from_address(self, from_address):
+        self.urban_routes_page.enter_from_location(from_address)
+
+    def get_from_address(self):
+        return self.urban_routes_page.get_from_location().getattribute("value")
+
+    def set_to_address(self, to_address):
+        self.urban_routes_page.enter_to_location(to_address)
+
+    def get_to_address(self):
+        return self.urban_routes_page.get_to_location().getattribute("value")
+    """
+
     def test_tariff_cards(self):
         self.call_taxi()
         self.urban_routes_page.click_business_tariff_card()
@@ -159,4 +173,18 @@ class SelectionHelper:
             assert "Duration" in self.urban_routes_page.get_duration_text()
         except:
             print("Results text not displaying Drive")
+        time.sleep(4)
+
+    def test_send_message_to_driver(self):
+        message = "Don't be late"
+
+        self.call_taxi()
+        self.urban_routes_page.send_message_to_driver(message)
+
+        try:
+            assert self.urban_routes_page.get_message_to_driver() == message
+            print("Succeeded in sending message to driver")
+        except:
+            print("Failed to send message to driver")
+
         time.sleep(4)
