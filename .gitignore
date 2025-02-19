@@ -2,4 +2,7 @@
 .venv/
 __pycache__/
 .work/
+.log
+log.
+
 
