@@ -45,9 +45,7 @@ class UrbanRoutesPage:
     PHONE_NUMBER_BUTTON = (By.XPATH, '//div[@class="workflow"]/div[@class="workflow-subcontainer"]/div[@class="tariff-picker shown"]/div[@class="form"]/div[@class="np-button"]')
     PHONE_NUMBER_FIELD = (By.XPATH, '//input[@name="phone"]')
     PHONE_NUMBER_NEXT_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section > form > div.buttons > button.button.full') #
-    SMS_CODE_FIELD = (By.XPATH, '//input[@id="code"]')
-    SMS_CONFIRM_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section.active > form > div.buttons > button:nth-child(1)')
-    SMS_CLOSE_BUTTON = (By.CSS_SELECTOR, "#root > div > div.number-picker.open > div.modal > div:nth-child(1) > button")
+    PHONE_CLOSE_BUTTON = (By.XPATH, "//div[@class='number-picker open']//button[@class='close-button section-close']")
 
     PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
     PAYMENT_METHOD_CC_LOCATOR = (By.XPATH, '//div[@id="root"]/div[@class="app"]/div[@class="payment-picker open"]/div[@class="modal"]/div[@class="section active"]\
@@ -200,23 +198,14 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
 
     def get_phone_number_text(self):
-        return self.driver.find_element(*self.PHONE_NUMBER_FIELD).text
+        return self.driver.find_element(*self.PHONE_NUMBER_FIELD).get_attribute("value")
 
     def click_phone_number_next(self):
         #self.driver.find_elements(*self.PHONE_NUMBER_NEXT_BUTTON)[0].click()
         self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
 
-    def set_sms_code(self, code):
-        self.driver.find_element(*self.SMS_CODE_FIELD).send_keys(code)
-
-    def get_sms_code_text(self):
-        return self.driver.find_element(*self.SMS_CODE_FIELD).text
-
-    def click_sms_code_confirm(self):
-        self.driver.find_element(*self.SMS_CONFIRM_BUTTON).click()
-
-    def click_sms_code_close(self):
-        self.driver.find_element(*self.SMS_CLOSE_BUTTON).click()
+    def click_phone_number_close(self):
+        self.driver.find_element(*self.PHONE_CLOSE_BUTTON).click()
 
     def click_payment_method(self):
         self.driver.find_element(*self.PAYMENT_METHOD).click()

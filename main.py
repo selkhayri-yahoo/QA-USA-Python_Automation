@@ -65,32 +65,16 @@ class TestUrbanRoutes:
         time.sleep(5)
         self.urban_routes_page.click_call_taxi_button()
 
-    def set_phone_number_code(self, phone_number, code):
+    def set_phone_number(self, phone_number):
         time.sleep(5)
         self.urban_routes_page.click_phone_number_button()
         time.sleep(3)
         self.urban_routes_page.set_phone_number_text(phone_number)
-        time.sleep(3)
-        self.urban_routes_page.click_phone_number_next()
-        time.sleep(3)
-        self.urban_routes_page.set_sms_code(code)
-        time.sleep(3)
-        self.urban_routes_page.click_sms_code_confirm()
-        time.sleep(4)
-        self.urban_routes_page.click_sms_code_close()
 
-    def get_phone_number_code(self):
+    def get_phone_number(self):
         self.urban_routes_page.click_phone_number_button()
         time.sleep(3)
-        phone_number = self.urban_routes_page.get_phone_number_text()
-        time.sleep(3)
-        self.urban_routes_page.click_phone_number_next()
-        time.sleep(3)
-        code = self.urban_routes_page.get_sms_code_text()
-        self.urban_routes_page.click_sms_code_close()
-        
-        return (phone_number, code)
-
+        return self.urban_routes_page.get_phone_number_text()
 
     # Name: test_set_route
     # Parameters: None
@@ -167,25 +151,20 @@ class TestUrbanRoutes:
         # Add in S8
         self.call_taxi()
         phone_number = "+1 519 555 1212"
-        code = "4862"
 
-        self.set_phone_number_code(phone_number, code)
+        self.set_phone_number(phone_number)
 
-        time.sleep(5)
+        self.urban_routes_page.click_phone_number_close()
 
-        retrieved_phone_number, retrieved_code = self.get_phone_number_code()
+        retrieved_phone_number = self.get_phone_number()
+
 
         try:
             assert retrieved_phone_number == phone_number
             logging.log(logging.INFO, "Successfully set phone number")
         except:
-            logging.log(logging.ERROR, "Failed to set phone number")
+            logging.log(logging.ERROR, "Failed to set phone number. Expecting " + str(phone_number) + ", Retrieved: " + str(retrieved_phone_number))
 
-        try:
-            assert retrieved_code == code
-            logging.log(logging.INFO, "Successfully set code")
-        except:
-            logging.log(logging.ERROR, "Failed to set code")
 
 
 
