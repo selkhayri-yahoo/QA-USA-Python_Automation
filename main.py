@@ -36,7 +36,7 @@ class TestUrbanRoutes:
         chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
         cls.driver = webdriver.Chrome(options=chrome_options)
 
-        logging.basicConfig(filename="log.txt",
+        logging.basicConfig(filename="logs/log.txt",
                             filemode='a',
                             format='%(asctime)s,%(msecs)03d %(name)s %(levelname)s %(message)s',
                             datefmt='%Y-%m-%d %H:%M:%S',
@@ -151,13 +151,9 @@ class TestUrbanRoutes:
         # Add in S8
         self.call_taxi()
         phone_number = "+1 519 555 1212"
-
         self.set_phone_number(phone_number)
-
         self.urban_routes_page.click_phone_number_close()
-
         retrieved_phone_number = self.get_phone_number()
-
 
         try:
             assert retrieved_phone_number == phone_number
@@ -178,6 +174,7 @@ class TestUrbanRoutes:
         print("function created for fill_card")
         pass
 
+
     # Name: test_comment_for_driver
     # Parameters: None
     # Return: None
@@ -185,8 +182,19 @@ class TestUrbanRoutes:
     # This method tests the comment_for_driver method of the Urban Routes web service
     def test_comment_for_driver(self):
         # Add in S8
-        print("function created for comment_for_driver")
-        pass
+        self.call_taxi()
+
+        comment_for_driver = "Do not be late!"
+        self.urban_routes_page.send_message_to_driver(comment_for_driver)
+
+        retrieved_comment_for_driver = self.urban_routes_page.get_message_to_driver()
+
+        try:
+            assert comment_for_driver == retrieved_comment_for_driver
+            logging.log(logging.INFO, "Successfully commented for driver")
+        except:
+            logging.log(logging.ERROR, "Failed to commented for driver")
+
 
     # Name: test_order_blanket_and_handkerchiefs
     # Parameters: None
@@ -196,7 +204,26 @@ class TestUrbanRoutes:
     def test_order_blanket_and_handkerchiefs(self):
         # Add in S8
         print("function created for order_blanket_and_handkerchiefs")
-        pass
+        self.call_taxi()
+        self.urban_routes_page.click_supportive_tariff_card()
+        time.sleep(2)
+
+        self.urban_routes_page.click_order_requirements()
+        time.sleep(2)
+        first_value = self.urban_routes_page.get_blanket_and_handkerchiefs_checkbox_value()
+
+        self.urban_routes_page.click_blanket_and_handkerchiefs()
+        second_value = self.urban_routes_page.get_blanket_and_handkerchiefs_checkbox_value()
+        time.sleep(2)
+        self.urban_routes_page.click_blanket_and_handkerchiefs()
+        third_value = self.urban_routes_page.get_blanket_and_handkerchiefs_checkbox_value()
+
+        try:
+            assert first_value != second_value and second_value != third_value and first_value == third_value
+            logging.log(logging.INFO, "Successfully set blanket and handkerchiefs")
+        except:
+            logging.log(logging.ERROR, "Failed to set blanket and handkerchiefs")
+
 
     # Name: test_order_2_ice_creams
     # Parameters: None
@@ -236,7 +263,9 @@ test_urban_routes.setup_class()
 time.sleep(10)
 # test_urban_routes.test_set_route()
 # test_urban_routes.test_select_plan()
-test_urban_routes.test_fill_phone_number()
+# test_urban_routes.test_fill_phone_number()
+# test_urban_routes.test_comment_for_driver()
+test_urban_routes.test_order_blanket_and_handkerchiefs()
 time.sleep(10)
 test_urban_routes.teardown_class()
 

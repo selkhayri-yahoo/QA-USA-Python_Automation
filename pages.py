@@ -62,7 +62,12 @@ class UrbanRoutesPage:
 
     PAYMENT_DIALOG_CLOSE = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > button")
 
+    BLANKET_AND_HANDKERCHIEFS_click = (By.CLASS_NAME, 'switch') # [0]
+    BLANKET_AND_HANDKERCHIEFS_read = (By.CLASS_NAME, 'switch-input')
+
     MESSAGE_TO_DRIVER = (By.ID, "comment")
+
+    ORDER_REQUIREMENTS = (By.CLASS_NAME, "reqs")
 
     def __init__(self, driver):
         self.driver = driver
@@ -239,3 +244,14 @@ class UrbanRoutesPage:
 
     def get_message_to_driver(self):
         return self.driver.find_element(*self.MESSAGE_TO_DRIVER).get_attribute('value')
+
+    def click_order_requirements(self):
+        self.driver.find_elements(*self.ORDER_REQUIREMENTS)[0].click()
+
+    def click_blanket_and_handkerchiefs(self):
+        self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_click)[0].click()
+
+    def get_blanket_and_handkerchiefs_checkbox_value(self):
+        switches = self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_read)
+
+        return switches[0].is_selected()
