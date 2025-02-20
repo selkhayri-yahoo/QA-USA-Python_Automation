@@ -31,8 +31,6 @@ class TestUrbanRoutes:
         capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
 
         chrome_options = Options()
-        #chrome_options.add_argument("--disable-extensions")
-        #cls.driver = webdriver.Chrome(options=chrome_options)
         chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
         cls.driver = webdriver.Chrome(options=chrome_options)
 
@@ -75,6 +73,52 @@ class TestUrbanRoutes:
         self.urban_routes_page.click_phone_number_button()
         time.sleep(3)
         return self.urban_routes_page.get_phone_number_text()
+
+    def add_credit_card_payment(self):
+        self.urban_routes_page.click_payment_method()
+        try:
+            time.sleep(4)
+            self.urban_routes_page.click_add_credit_card()
+            time.sleep(4)
+            self.urban_routes_page.set_credit_card_text("1234 5678 9012")
+            time.sleep(4)
+            self.urban_routes_page.set_credit_card_code("4970")
+            time.sleep(4)
+            self.urban_routes_page.submit_credit_card_add()
+            time.sleep(4)
+            self.urban_routes_page.close_payment_method_dialog()
+            time.sleep(4)
+            logging.log(logging.INFO, "Successfully filled card: add credit card")
+        except:
+            logging.log(logging.ERROR, "Failed to fill card: add credit card")
+
+    def toggle_payment_method_selection(self):
+        # Add in S8
+        self.urban_routes_page.click_payment_method()
+        time.sleep(2)
+        self.urban_routes_page.select_cash_payment()
+        time.sleep(2)
+        self.urban_routes_page.close_payment_dialog()
+
+        try:
+            assert "Cash" in self.urban_routes_page.get_selected_payment_method()
+            logging.log(logging.INFO, "Successfully selected cash payment method")
+        except:
+            logging.log(logging.ERROR, "Failed to select cash payment method")
+
+        time.sleep(10)
+
+        self.urban_routes_page.click_payment_method()
+        time.sleep(2)
+        self.urban_routes_page.select_cc_payment()
+        time.sleep(2)
+        self.urban_routes_page.close_payment_dialog()
+
+        try:
+            assert "Card" in self.urban_routes_page.get_selected_payment_method()
+            logging.log(logging.INFO, "Successfully selected card payment method")
+        except:
+            logging.log(logging.ERROR, "Failed to select card payment method")
 
     # Name: test_set_route
     # Parameters: None
@@ -167,9 +211,16 @@ class TestUrbanRoutes:
     #
     # This method tests the fill_card method of the Urban Routes web service
     def test_fill_card(self):
-        # Add in S8
-        print("function created for fill_card")
-        pass
+        self.call_taxi()
+        time.sleep(4)
+        try:
+            self.add_credit_card_payment()
+            logging.log(logging.INFO, "Successfully filled card: add credit card")
+        except:
+            logging.log(logging.ERROR, "Failed to fill card: add credit card")
+
+        time.sleep(4)
+        self.toggle_payment_method_selection()
 
 
     # Name: test_comment_for_driver
@@ -285,8 +336,9 @@ time.sleep(10)
 # test_urban_routes.test_fill_phone_number()
 # test_urban_routes.test_comment_for_driver()
 # test_urban_routes.test_order_blanket_and_handkerchiefs()
-#test_urban_routes.test_order_2_ice_creams()
-test_urban_routes.test_car_search_model_appears()
+# test_urban_routes.test_order_2_ice_creams()
+# test_urban_routes.test_car_search_model_appears()
+test_urban_routes.test_fill_card()
 time.sleep(10)
 test_urban_routes.teardown_class()
 

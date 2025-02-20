@@ -47,9 +47,10 @@ class UrbanRoutesPage:
     PHONE_NUMBER_NEXT_BUTTON = (By.CSS_SELECTOR, '#root > div > div.number-picker.open > div.modal > div.section > form > div.buttons > button.button.full') #
     PHONE_CLOSE_BUTTON = (By.XPATH, "//div[@class='number-picker open']//button[@class='close-button section-close']")
 
-    PAYMENT_METHOD = (By.XPATH, '//div[@class="pp-button filled"]')
+    PAYMENT_METHOD = (By.CSS_SELECTOR, "#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.pp-button.filled")
     PAYMENT_METHOD_CC_LOCATOR = (By.XPATH, '//div[@id="root"]/div[@class="app"]/div[@class="payment-picker open"]/div[@class="modal"]/div[@class="section active"]\
 /div[@class="pp-selector"]/div[@class="pp-row disabled"]')
+    PAYMENT_METHOD_CLOSE = (By.CSS_SELECTOR, "#root > div > div.payment-picker.open > div.modal > div.section.active > button")
 
     ADD_CARD_CC_NUM = (By.ID, 'number')
     ADD_CARD_CC_CODE = (By.CLASS_NAME, "card-input")  # [1]
@@ -175,7 +176,6 @@ class UrbanRoutesPage:
         except:
             self.driver.find_element(*self.TAXI_ICON_LOCATOR_ACTIVE).click()
 
-
     def click_bike_icon(self):
         # Click bike Icon
         self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
@@ -271,3 +271,9 @@ class UrbanRoutesPage:
         tp = self.driver.find_element(*self.TARIFF_PICKER)
 
         return tp != None
+
+    def click_add_cc_payment(self):
+        self.driver.find_element(*self.PAYMENT_METHOD_CC_LOCATOR).click()
+
+    def close_payment_method_dialog(self):
+        self.driver.find_element(*self.PAYMENT_METHOD_CLOSE).click()
