@@ -69,6 +69,11 @@ class UrbanRoutesPage:
 
     ORDER_REQUIREMENTS = (By.CLASS_NAME, "reqs")
 
+    ICE_CREAM_ADD = (By.CLASS_NAME, "counter-plus")
+    ITEM_COUNTS = (By.CLASS_NAME, 'counter-value')
+
+    TARIFF_PICKER = (By.XPATH, "//div[contains(@class, 'tariff-picker') and contains(@class, 'shown')]")
+
     def __init__(self, driver):
         self.driver = driver
 
@@ -255,3 +260,14 @@ class UrbanRoutesPage:
         switches = self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_read)
 
         return switches[0].is_selected()
+
+    def click_add_icecream(self):
+        self.driver.find_element(*self.ICE_CREAM_ADD).click()
+
+    def get_icecream_count(self):
+        return self.driver.find_elements(*self.ITEM_COUNTS)[0].text
+
+    def is_tariff_picker_shown(self):
+        tp = self.driver.find_element(*self.TARIFF_PICKER)
+
+        return tp != None

@@ -83,7 +83,6 @@ class TestUrbanRoutes:
     # This method tests the set_route method of the Urban Routes web service
     def test_set_route(self):
         # Add in S8
-        logging.log(logging.INFO, "function created for set_route")
         address_from = "East"
         address_to = "1300"
 
@@ -111,7 +110,6 @@ class TestUrbanRoutes:
     # This method tests the select_plan method of the Urban Routes web service
     def test_select_plan(self):
         # Add in S8
-        print("function created for select_plan")
         self.set_addresses()
         time.sleep(5)
         self.urban_routes_page.click_optimal_option()
@@ -163,7 +161,6 @@ class TestUrbanRoutes:
 
 
 
-
     # Name: test_fill_card
     # Parameters: None
     # Return: None
@@ -203,7 +200,6 @@ class TestUrbanRoutes:
     # This method tests the order_blanket_and_handkerchiefs method of the Urban Routes web service
     def test_order_blanket_and_handkerchiefs(self):
         # Add in S8
-        print("function created for order_blanket_and_handkerchiefs")
         self.call_taxi()
         self.urban_routes_page.click_supportive_tariff_card()
         time.sleep(2)
@@ -232,15 +228,27 @@ class TestUrbanRoutes:
     # This method tests the order_2_ice_creams method of the Urban Routes web service
     def test_order_2_ice_creams(self):
         # Add in S8
-        print("function created for order_2_ice_creams")
+        self.call_taxi()
+        self.urban_routes_page.click_supportive_tariff_card()
+        time.sleep(2)
+        self.urban_routes_page.click_order_requirements()
+        time.sleep(2)
 
         # A variable should be defined and then loop should iterate twice ...
         number_of_ice_creams = 2   # the number of ice creams to order
         for i in range(number_of_ice_creams):
             # Add in S8
-            pass
-
+            self.urban_routes_page.click_add_icecream()
+            time.sleep(1)
         pass
+
+        try:
+            assert str(number_of_ice_creams) == self.urban_routes_page.get_icecream_count()
+            logging.log(logging.INFO, "Successfully set icecream count")
+        except:
+            msg = f"Failed to set icecream count; Number of ice creams needed: {number_of_ice_creams}, Number of ice creams set: {self.urban_routes_page.get_icecream_count()}."
+            logging.log(logging.ERROR, msg)
+
 
     # Name: test_car_search_model_appears
     # Parameters: None
@@ -249,8 +257,19 @@ class TestUrbanRoutes:
     # This method tests the car_search_model_appears method of the Urban Routes web service
     def test_car_search_model_appears(self):
         # Add in S8
-        print("function created for car_search_model_appears")
-        pass
+        self.set_addresses()
+        time.sleep(2)
+        self.urban_routes_page.click_custom_option()
+        time.sleep(2)
+        self.urban_routes_page.click_drive_icon()
+        time.sleep(4)
+        self.urban_routes_page.click_book_button()
+        time.sleep(2)
+        try:
+            assert self.urban_routes_page.is_tariff_picker_shown() == True
+            logging.log(logging.INFO, "Successfully shown car search model")
+        except:
+            logging.log(logging.ERROR, "Failed to show car search model")
 
     @classmethod
     def teardown_class(cls):
@@ -265,7 +284,9 @@ time.sleep(10)
 # test_urban_routes.test_select_plan()
 # test_urban_routes.test_fill_phone_number()
 # test_urban_routes.test_comment_for_driver()
-test_urban_routes.test_order_blanket_and_handkerchiefs()
+# test_urban_routes.test_order_blanket_and_handkerchiefs()
+#test_urban_routes.test_order_2_ice_creams()
+test_urban_routes.test_car_search_model_appears()
 time.sleep(10)
 test_urban_routes.teardown_class()
 
