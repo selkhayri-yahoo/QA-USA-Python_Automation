@@ -1,3 +1,4 @@
+import time
 import logging
 
 import data      # import the data.py file which contains the constant values
@@ -5,13 +6,10 @@ import helpers   # import the helpers.py file which contains networking function
 
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
-
 from selenium.webdriver.chrome.options import Options
 
 from pages import UrbanRoutesPage
-import time
 
-# from selection_helper_library import SelectionHelper
 '''
 Class TestUrbanRoutes
 
@@ -49,6 +47,14 @@ class TestUrbanRoutes:
         else:
             # Connection to Urban Routes web service failed
             logging.log(logging.ERROR, "Cannot connect to Urban Routes. Check the server is on and still running")
+
+    def reload_page(self):
+        # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
+        # and print a message accordingly
+        self.driver.get(data.URBAN_ROUTES_URL)
+        self.urban_routes_page = UrbanRoutesPage(self.driver)
+
+        time.sleep(5)
 
     def set_addresses(self):
         self.urban_routes_page.enter_from_location("East")
@@ -92,6 +98,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to fill card: add credit card")
 
+
     def toggle_payment_method_selection(self):
         # Add in S8
         self.urban_routes_page.click_payment_method()
@@ -106,7 +113,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to select cash payment method")
 
-        time.sleep(10)
+        time.sleep(2)
 
         self.urban_routes_page.click_payment_method()
         time.sleep(2)
@@ -144,7 +151,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to set route")
 
-
+        self.reload_page()
 
 
     # Name: test_select_plan
@@ -182,7 +189,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to select custom plan")
 
-
+        self.reload_page()
 
     # Name: test_fill_phone_number
     # Parameters: None
@@ -203,7 +210,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to set phone number. Expecting " + str(phone_number) + ", Retrieved: " + str(retrieved_phone_number))
 
-
+        self.reload_page()
 
     # Name: test_fill_card
     # Parameters: None
@@ -222,6 +229,7 @@ class TestUrbanRoutes:
         time.sleep(4)
         self.toggle_payment_method_selection()
 
+        self.reload_page()
 
     # Name: test_comment_for_driver
     # Parameters: None
@@ -243,6 +251,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to commented for driver")
 
+        self.reload_page()
 
     # Name: test_order_blanket_and_handkerchiefs
     # Parameters: None
@@ -271,6 +280,7 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to set blanket and handkerchiefs")
 
+        self.reload_page()
 
     # Name: test_order_2_ice_creams
     # Parameters: None
@@ -300,6 +310,7 @@ class TestUrbanRoutes:
             msg = f"Failed to set icecream count; Number of ice creams needed: {number_of_ice_creams}, Number of ice creams set: {self.urban_routes_page.get_icecream_count()}."
             logging.log(logging.ERROR, msg)
 
+        self.reload_page()
 
     # Name: test_car_search_model_appears
     # Parameters: None
@@ -322,6 +333,8 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to show car search model")
 
+        self.reload_page()
+
     @classmethod
     def teardown_class(cls):
         cls.driver.quit()
@@ -330,14 +343,13 @@ class TestUrbanRoutes:
 
 test_urban_routes = TestUrbanRoutes()
 test_urban_routes.setup_class()
-time.sleep(10)
-# test_urban_routes.test_set_route()
-# test_urban_routes.test_select_plan()
-# test_urban_routes.test_fill_phone_number()
-# test_urban_routes.test_comment_for_driver()
-# test_urban_routes.test_order_blanket_and_handkerchiefs()
-# test_urban_routes.test_order_2_ice_creams()
-# test_urban_routes.test_car_search_model_appears()
+test_urban_routes.test_set_route()
+test_urban_routes.test_select_plan()
+test_urban_routes.test_fill_phone_number()
+test_urban_routes.test_comment_for_driver()
+test_urban_routes.test_order_blanket_and_handkerchiefs()
+test_urban_routes.test_order_2_ice_creams()
+test_urban_routes.test_car_search_model_appears()
 test_urban_routes.test_fill_card()
 time.sleep(10)
 test_urban_routes.teardown_class()
