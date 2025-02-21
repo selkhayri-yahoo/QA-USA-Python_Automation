@@ -18,11 +18,13 @@ Class TestUrbanRoutes
 This class is used to test the functionality of the Urban Routes web app
 '''
 class TestUrbanRoutes:
-    # Name: setup_class
-    # Parameters: None
-    # Return: None
-    #
-    # This is the class constructor. It establishes the connection with the Urban Routes web service
+    """
+    Name: setup_class
+    Parameters: None
+    Return: None
+
+    This is the class constructor. It establishes the connection with the Urban Routes web service
+    """
     @classmethod
     def setup_class(cls):
         # Add in S8
@@ -184,11 +186,13 @@ class TestUrbanRoutes:
         except:
             logging.log(logging.ERROR, "Failed to select card payment method")
 
-    # Name: test_set_route
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability to set the start and end addresses of a planned route
+    """
+    Name: test_set_route
+    Parameters: None
+    Return: None
+
+    This method tests the ability to set the start and end addresses of a planned route
+    """
     def test_set_route(self):
         address_from = "East"
         address_to = "1300"
@@ -216,11 +220,13 @@ class TestUrbanRoutes:
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
 
-    # Name: test_select_plan
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability of the users to select their travel plan mode
+    """
+    Name: test_select_plan
+    Parameters: None
+    Return: None
+
+    This method tests the ability of the users to select their travel plan mode
+    """
     def test_select_plan(self):
         self.set_addresses()        # Set the "From" and "To" addresses
         time.sleep(5)
@@ -252,11 +258,13 @@ class TestUrbanRoutes:
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_fill_phone_number
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability of the user to enter their phone number into the Urban Routes web service
+    """
+    Name: test_fill_phone_number
+    Parameters: None
+    Return: None
+
+    This method tests the ability of the user to enter their phone number into the Urban Routes web service
+    """
     def test_fill_phone_number(self):
         self.call_taxi()         # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
         phone_number = "+1 519 555 1212"       # The test phone number
@@ -273,30 +281,29 @@ class TestUrbanRoutes:
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_fill_card
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability of the user to add a credit card to the Urban Routes web service
+    """
+    Name: test_fill_card
+    Parameters: None
+    Return: None
+
+    This method tests the ability of the user to add a credit card to the Urban Routes web service
+    """
     def test_fill_card(self):
         self.call_taxi()   # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
         time.sleep(4)
-        try:
-            self.add_credit_card_payment()  # Add a credit card payment method
-            logging.log(logging.INFO, "Successfully filled card: add credit card") # Log success
-        except:
-            logging.log(logging.ERROR, "Failed to fill card: add credit card")  # Log failure
-
+        self.add_credit_card_payment()  # Add a credit card payment method
         time.sleep(4)
         self.toggle_payment_method_selection()  # Test toggling between cash and credit card payment methods
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_comment_for_driver
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the comment_for_driver method of the Urban Routes web service
+    """
+    Name: test_comment_for_driver
+    Parameters: None
+    Return: None
+
+    This method tests the comment_for_driver method of the Urban Routes web service
+    """
     def test_comment_for_driver(self):
         self.call_taxi()  # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
 
@@ -313,11 +320,13 @@ class TestUrbanRoutes:
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_order_blanket_and_handkerchiefs
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability of users to order a blanket and handkerchiefs from the Urban Routes web service
+    """
+    Name: test_order_blanket_and_handkerchiefs
+    Parameters: None
+    Return: None
+
+    This method tests the ability of users to order a blanket and handkerchiefs from the Urban Routes web service
+    """
     def test_order_blanket_and_handkerchiefs(self):
         self.call_taxi()     # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
         self.urban_routes_page.click_supportive_tariff_card()  # Click the "Supportive" option
@@ -342,11 +351,13 @@ class TestUrbanRoutes:
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_order_2_ice_creams
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the ability of users to order two icecream from the Urban Routes web service
+    """
+    Name: test_order_2_ice_creams
+    Parameters: None
+    Return: None
+
+    This method tests the ability of users to order two icecream from the Urban Routes web service
+    """
     def test_order_2_ice_creams(self):
         self.call_taxi()   # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
         self.urban_routes_page.click_supportive_tariff_card()  # Click the "Supportive" option
@@ -371,11 +382,13 @@ class TestUrbanRoutes:
 
         self.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
-    # Name: test_car_search_model_appears
-    # Parameters: None
-    # Return: None
-    #
-    # This method tests the users' ability to select which car to book in the Urban Routes web service
+    """
+    Name: test_car_search_model_appears
+    Parameters: None
+    Return: None
+
+    This method tests the users' ability to select which car to book in the Urban Routes web service
+    """
     def test_car_search_model_appears(self):
         self.set_addresses()    # Set the "From" and "To" addresses
         time.sleep(2)
