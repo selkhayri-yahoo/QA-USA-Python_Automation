@@ -85,12 +85,6 @@ class UrbanRoutesPage:
     def __init__(self, driver):
         self.driver = driver
 
-    #def driver_init(self):
-    #    self.driver = webdriver.Chrome()
-    #    self.driver.get(data.URBAN_ROUTES_URL)
-
-    #def driver_quit(self):
-    #    self.driver.quit()
 
     """
     Name: enter_from_location
