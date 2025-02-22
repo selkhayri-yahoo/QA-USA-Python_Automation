@@ -370,7 +370,7 @@ class TestUrbanRoutes:
         for i in range(number_of_ice_creams):   # For number_of_ice_creams times, run the following loop
             self.urban_routes_page.click_add_icecream()     # Click "+" on the left of "Ice cream" in "Ice cream bucket"
             time.sleep(1)
-        pass
+
 
         try:    # Verify that the number of ice creams displayed in the app is number_of_ice_creams
             assert str(number_of_ice_creams) == self.urban_routes_page.get_icecream_count()
