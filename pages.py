@@ -1,11 +1,17 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import data
+import time
 
 class UrbanRoutesPage:
     # Locators as class attributes
     FROM_LOCATOR = (By.ID, 'from')
+    FROM_LOCATOR_PARENT = (By.CSS_SELECTOR, '#root > div > div.workflow > div.dst-picker > div:nth-child(1) > div:nth-child(2) > div.input-container')
+
     TO_LOCATOR = (By.ID, 'to')
+    TO_LOCATOR_PARENT = (By.CSS_SELECTOR, '#root > div > div.workflow > div.dst-picker > div:nth-child(2) > div:nth-child(2) > div.input-container')
+
     CUSTOM_OPTION_LOCATOR = (By.XPATH, '//div[text()="Custom"]')
     OPTIMAL_OPTION_LOCATOR = (By.XPATH, '//div[text()="Optimal"]')
     FASTEST_OPTION_LOCATOR = (By.XPATH, '//div[text()="Fastest"]')
@@ -82,8 +88,9 @@ class UrbanRoutesPage:
 
 
     """
-    def __init__(self, driver):
+    def __init__(self,driver):
         self.driver = driver
+
 
 
     """
@@ -96,6 +103,17 @@ class UrbanRoutesPage:
     def enter_from_location(self, from_text):
         # Enter From address
         self.driver.find_element(*self.FROM_LOCATOR).send_keys(from_text)
+
+
+    def clear_from_location(self):
+        self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.CONTROL + "a")
+        self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.DELETE)
+
+    def from_location_error(self):
+        parent_div = self.driver.find_element(*self.FROM_LOCATOR_PARENT)
+        parent_div_class = parent_div.get_attribute("class")
+        return "error" in parent_div_class
+
 
     """
     Name: get_from_location
@@ -117,6 +135,15 @@ class UrbanRoutesPage:
     def enter_to_location(self, to_text):
         # Enter To address
         self.driver.find_element(*self.TO_LOCATOR).send_keys(to_text)
+
+    def clear_to_location(self):
+        self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.CONTROL + "a")
+        self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.DELETE)
+
+    def to_location_error(self):
+        parent_div = self.driver.find_element(*self.TO_LOCATOR_PARENT)
+        parent_div_class = parent_div.get_attribute("class")
+        return "error" in parent_div_class
 
     """
     Name: get_to_location
@@ -690,3 +717,141 @@ class UrbanRoutesPage:
     """
     def close_payment_method_dialog(self):
         self.driver.find_element(*self.PAYMENT_METHOD_CLOSE).click()
+
+    """
+    Name: reload_page    
+    Paramaters: None
+    Returns: None
+
+    This method reloads the urban routes page.
+    """
+
+    def reload_page(self):
+        # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
+        # and print a message accordingly
+        self.driver.get(data.URBAN_ROUTES_URL)  # Retrieve the urban routes page
+
+    """
+    Name: set_addresses    
+    Parameters: None
+    Returns: None
+
+    This method sets the source and destination addresses.
+    """
+
+    def set_addresses(self):
+        self.enter_from_location("East")  # Set the "From" address to "East"
+        self.enter_to_location("1300")  # Set the "To" address to "1300"
+
+    """
+    Name: call_taxi    
+    Parameters: None
+    Returns: None
+
+    This method implements all the operations from setting the source and destination addresses to calling a taxi
+    """
+
+    def call_taxi(self):
+        self.set_addresses()  # Set the "From" and "To" addresses
+        time.sleep(2)
+        self.click_custom_option()  # Select the "Custom" option
+        time.sleep(2)
+        self.click_taxi_icon()  # Click the "taxi" icon
+        time.sleep(5)
+        self.click_call_taxi_button()  # Click the "Call a taxi" button
+
+    """
+    Name: set_phone_number    
+    Parameters: phone_number (string of numbers: +1 XXX XXX XXXX)
+    Returns: None
+
+    This method sets the phone number field in the Phone number dialog box.
+    """
+
+    def set_phone_number(self, phone_number):
+        time.sleep(5)
+        self.click_phone_number_button()  # Open the "Phone number" dialog
+        time.sleep(3)
+        self.set_phone_number_text(phone_number)  # Set the "Phone number"
+
+    """
+    Name: get_phone_number    
+    Parameters: None
+    Returns: The phone number the was entered into the Phone number dialog.
+
+    This method gets the phone number the was entered into the Phone number dialog
+    """
+
+    def get_phone_number(self):
+        self.click_phone_number_button()  # Open the "Phone number" dialog
+        time.sleep(3)
+        return self.get_phone_number_text()  # Retrieve and return the "Phone number" field
+
+    """
+    Name: add_credit_card_payment    
+    Parameters: None
+    Returns: None
+
+    This method adds a credit card option in the Payment Methods dialog.
+    """
+
+    def add_credit_card_payment(self):
+        # Open the "Payment Method" dialog
+        self.click_payment_method()  # Open the "Payment Method" dialog
+
+        # Add a credit card number and code
+        try:
+            time.sleep(4)
+            self.click_add_credit_card()  # Open the "Add a card" dialog box
+            time.sleep(4)
+            self.set_credit_card_text("1234 5678 9012")  # Enter credit card number
+            time.sleep(4)
+            self.set_credit_card_code("4970")  # Enter credit card code
+            time.sleep(4)
+            self.submit_credit_card_add()  # Click link to add credit card and close the "Add a card" dialog
+            time.sleep(4)
+            self.close_payment_method_dialog()  # Close the "Payment Method" dialog
+            time.sleep(4)
+            print("Successfully filled card: add credit card")  # Log success
+        except:
+            print("Failed to fill card: add credit card")  # log failure
+
+    """
+    Name: toggle_payment_method_selection
+    Parameters: None
+    Returns: None
+
+    This method tests the ability to toggle between cash payment and credit card payment.
+    """
+
+    def toggle_payment_method_selection(self):
+        # Select cash payment method
+        self.click_payment_method()  # Open the "Payment method" dialog
+        time.sleep(2)
+        self.select_cash_payment()  # Select "Cash"
+        time.sleep(2)
+        self.close_payment_dialog()  # Close the "Payment method" dialog
+
+        # Verify that the cash payment method has been successfully selected
+        try:
+            assert "Cash" in self.get_selected_payment_method()
+            print("Successfully selected cash payment method")
+        except:
+            print("Failed to select cash payment method")
+
+        time.sleep(2)
+
+        # Select credit card payment method
+        self.click_payment_method()
+        time.sleep(2)
+        self.select_cc_payment()
+        time.sleep(2)
+        self.close_payment_dialog()
+
+        # Verify that the credit card payment method has been selected
+        try:
+            assert "Card" in self.get_selected_payment_method()
+            print("Successfully selected card payment method")
+        except:
+            print("Failed to select card payment method")
+
