@@ -12,41 +12,20 @@ class UrbanRoutesPage:
     TO_LOCATOR = (By.ID, 'to')
     TO_LOCATOR_PARENT = (By.CSS_SELECTOR, '#root > div > div.workflow > div.dst-picker > div:nth-child(2) > div:nth-child(2) > div.input-container')
 
-    CUSTOM_OPTION_LOCATOR = (By.XPATH, '//div[text()="Custom"]')
-    OPTIMAL_OPTION_LOCATOR = (By.XPATH, '//div[text()="Optimal"]')
-    FASTEST_OPTION_LOCATOR = (By.XPATH, '//div[text()="Fastest"]')
-
-    CAR_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/car.8a2b1ff5.svg"]')
-    WALK_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/walk.d33bf83c.svg"]')
-    TAXI_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/taxi.9a02abc6.svg"]')
-    TAXI_ICON_LOCATOR_ACTIVE = (By.XPATH, '//img[@src="/static/media/taxi-active.b0be3054.svg"]')
-    BIKE_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/bike.fb41c762.svg"]')
-    SCOOTER_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/scooter.cf9bb57e.svg"]')
-    DRIVE_ICON_LOCATOR = (By.XPATH, '//div[@class="type drive"]')
-
-    RESULTS_TEXT_LOCATOR = (By.XPATH, '//div[@class="results-text"]//div[@class="text"]')
-    DURATION_TEXT_LOCATOR = (By.CSS_SELECTOR, "div.results-text>div.duration")
-    BOOK_BUTTON_LOCATOR = (By.XPATH, '//div[@class="results-text"]/button[@class="button round"]')
-    CAMPING_CARD_LOCATOR = (By.XPATH, '//div[text()="Camping"]/..')
-
-    CAR_MAKE_LOCATOR = (By.XPATH, '//div[@class="drive-preview-title"]')
-
-    LICENCE_ADD_LOCATOR = (By.XPATH, '//div[@class="workflow"]//div[@class="np-button"]')
-    FIRST_NAME_LOCATOR = (By.ID, 'firstName')
-    LAST_NAME_LOCATOR = (By.ID, 'lastName')
-    BIRTH_DATE_LOCATOR = (By.ID, 'birthDate')
-    LICENCE_NUMBER_LOCATOR = (By.ID, 'number')
-    ADD_BUTTON_LOCATOR = (By.XPATH, '//div[@class="rights-buttons"]/button[text()="Add"]')
-    POPUP_WINDOW_LOCATOR = (By.XPATH, '//div[@class="section active"]//div[@class="head"]')
-
     CALL_TAXI_LOCATOR = (By.CSS_SELECTOR, "div.results-text>button.button")
 
     BUSINESS_TARIFF_CARD = (By.XPATH, '//img[@alt="Business"]')
+    BUSINESS_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(1)')
     SLEEPY_TARIFF_CARD = (By.XPATH, '//img[@alt="Sleepy"]')
+    SLEEPY_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(2)')
     HOLIDAY_TARIFF_CARD = (By.XPATH, '//img[@alt="Holiday"]')
+    HOLIDAY_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(3)')
     TALKING_TARIFF_CARD = (By.XPATH, '//img[@alt="Talking"]')
+    TALKING_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(4)')
     SUPPORTIVE_TARIFF_CARD = (By.XPATH, '//img[@alt="Supportive"]')
+    SUPPORTIVE_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(5)')
     GLOSSY_TARIFF_CARD = (By.XPATH, '//img[@alt="Glossy"]')
+    GLOSSY_TARIFF_IND = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.tariff-cards > div:nth-child(6)')
 
     PHONE_NUMBER_BUTTON = (By.XPATH, '//div[@class="workflow"]/div[@class="workflow-subcontainer"]/div[@class="tariff-picker shown"]/div[@class="form"]/div[@class="np-button"]')
     PHONE_NUMBER_FIELD = (By.XPATH, '//input[@name="phone"]')
@@ -87,11 +66,10 @@ class UrbanRoutesPage:
     Parameters: driver
     Return: None
 
-
+    This is the class constructor.
     """
     def __init__(self,driver):
         self.driver = driver
-
 
 
     """
@@ -99,17 +77,33 @@ class UrbanRoutesPage:
     Parameters: from_text
     Return: None
 
-
+    This method sets the "From" address in the Urban Routes web interface
     """
     def enter_from_location(self, from_text):
         # Enter From address
         self.driver.find_element(*self.FROM_LOCATOR).send_keys(from_text)
 
+    
+    """
+    Name: clear_from_location
+    Parameters: None
+    Return: None
 
+    This method clears the "From" address in the Urban Routes web interface
+    """
     def clear_from_location(self):
         self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.CONTROL + "a")
         self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.DELETE)
 
+
+    """
+    Name: from_location_error
+    Parameters: None
+    Return: None
+
+    This method detects if the data entered into the "From" address has caused
+    an error.
+    """
     def from_location_error(self):
         parent_div = self.driver.find_element(*self.FROM_LOCATOR_PARENT)
         parent_div_class = parent_div.get_attribute("class")
@@ -119,291 +113,64 @@ class UrbanRoutesPage:
     """
     Name: get_from_location
     Parameters: None
-    Return:
+    Return: The value in the "From" address field
 
-
+    This method retrieves the value that is stored in the "From" address field
     """
     def get_from_location(self):
         return self.driver.find_element(*self.FROM_LOCATOR).get_attribute("value")
 
+    
     """
     Name: enter_to_location
     Parameters: to_text
     Return: None
 
-
+    This method sets the "To" address field with the passed-in parameter
     """
     def enter_to_location(self, to_text):
         # Enter To address
         self.driver.find_element(*self.TO_LOCATOR).send_keys(to_text)
 
+    
+    """
+    Name: clear_to_location
+    Parameters: None
+    Return: None
+
+    This method clears the "To" address in the Urban Routes web interface
+    """
     def clear_to_location(self):
         self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.CONTROL + "a")
         self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.DELETE)
 
+
+    """
+    Name: to_location_error
+    Parameters: None
+    Return: None
+
+    This method detects if the data entered into the "To" address has caused
+    an error.
+    """
     def to_location_error(self):
         parent_div = self.driver.find_element(*self.TO_LOCATOR_PARENT)
         parent_div_class = parent_div.get_attribute("class")
         return "error" in parent_div_class
 
+    
     """
     Name: get_to_location
     Parameters: None
-    Return:
+    Return: The value in the "To" address field
 
-
+    This method retrieves the value that is stored in the "To" address field
     """
     def get_to_location(self):
         return self.driver.find_element(*self.TO_LOCATOR).get_attribute("value")
 
-    """
-    Name: click_custom_option
-    Parameters: None
-    Return: None
 
 
-    """
-    def click_custom_option(self):
-        # Click Custom
-        self.driver.find_element(*self.CUSTOM_OPTION_LOCATOR).click()
-
-    """
-    Name: get_custom_option_status
-    Parameters: None
-    Return:
-
-
-    """
-    def get_custom_option_status(self):
-        return self.driver.find_element(*self.CUSTOM_OPTION_LOCATOR).get_attribute("class")
-
-    """
-    Name: click_optimal_option
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_optimal_option(self):
-        self.driver.find_element(*self.OPTIMAL_OPTION_LOCATOR).click()
-
-    """
-    Name: get_optimal_option_status
-    Parameters: None
-    Return:
-
-
-    """
-    def get_optimal_option_status(self):
-        return self.driver.find_element(*self.OPTIMAL_OPTION_LOCATOR).get_attribute("class")
-
-    """
-    Name: click_fastest_option
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_fastest_option(self):
-        self.driver.find_element(*self.FASTEST_OPTION_LOCATOR).click()
-
-    """
-    Name: get_fastest_option_status
-    Parameters: None
-    Return:
-
-
-    """
-    def get_fastest_option_status(self):
-        return self.driver.find_element(*self.FASTEST_OPTION_LOCATOR).get_attribute("class")
-
-    """
-    Name: click_scooter_icon
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_scooter_icon(self):
-        # Click Scooter Icon
-        self.driver.find_element(*self.SCOOTER_ICON_LOCATOR).click()
-
-    """
-    Name: get_results_text
-    Parameters: None
-    Return:
-
-
-    """
-    def get_results_text(self):
-        # Return the results text
-        return self.driver.find_element(*self.RESULTS_TEXT_LOCATOR).text
-
-    """
-    Name: click_drive_icon
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_drive_icon(self):
-        # Click Drive Icon
-        self.driver.find_element(*self.DRIVE_ICON_LOCATOR).click()
-
-    """
-    Name: click_book_button
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_book_button(self):
-        # Click Book button
-        self.driver.find_element(*self.BOOK_BUTTON_LOCATOR).click()
-
-    """
-    Name: click_camping_card
-    Parameters: None
-    Return:
-
-
-    """
-    def click_camping_card(self):
-        self.driver.find_element(*self.CAMPING_CARD_LOCATOR).click()
-
-    """
-    Name: get_car_make
-    Parameters: None
-    Return:
-
-
-    """
-    def get_car_make(self):
-        return self.driver.find_element(*self.CAR_MAKE_LOCATOR).text
-
-    """
-    Name: click_licence_add_button
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_licence_add_button(self):
-        self.driver.find_element(*self.LICENCE_ADD_LOCATOR).click()
-
-    """
-    Name: set_licence_first_name
-    Parameters: first_name
-    Return: None
-
-
-    """
-    def set_licence_first_name(self, first_name):
-        self.driver.find_element(*self.FIRST_NAME_LOCATOR).send_keys(first_name)
-
-    """
-    Name: set_licence_last_name
-    Parameters: last_name
-    Return: None
-
-
-    """
-    def set_licence_last_name(self, last_name):
-        self.driver.find_element(*self.LAST_NAME_LOCATOR).send_keys(last_name)
-
-    """
-    Name: set_licence_birth_date
-    Parameters: birth_date
-    Return: None
-
-
-    """
-    def set_licence_birth_date(self, birth_date):
-        self.driver.find_element(*self.BIRTH_DATE_LOCATOR).send_keys(birth_date)
-
-    """
-    Name: set_licence_licence_number
-    Parameters: licence_number
-    Return: None
-
-
-    """
-    def set_licence_licence_number(self, licence_number):
-        self.driver.find_element(*self.LICENCE_NUMBER_LOCATOR).send_keys(licence_number)
-
-    """
-    Name: click_add_button
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_add_button(self):
-        self.driver.find_element(*self.ADD_BUTTON_LOCATOR).click()
-
-    """
-    Name: get_popup_window_text
-    Parameters: None
-    Return:
-
-
-    """
-    def get_popup_window_text(self):
-        return self.driver.find_element(*self.POPUP_WINDOW_LOCATOR).text
-
-    """
-    Name: get_duration_text
-    Parameters: None
-    Return:
-
-
-    """
-    def get_duration_text(self):
-        return self.driver.find_element(*self.DURATION_TEXT_LOCATOR).text
-
-    """
-    Name: click_car_icon
-    Parameters: None
-    Return:
-
-
-    """
-    def click_car_icon(self):
-        self.driver.find_element(*self.CAR_ICON_LOCATOR).click()
-
-    """
-    Name: click_walk_icon
-    Parameters: None
-    Return:
-
-
-    """
-    def click_walk_icon(self):
-        self.driver.find_element(*self.WALK_ICON_LOCATOR).click()
-
-    """
-    Name: click_taxi_icon
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_taxi_icon(self):
-        try:
-            self.driver.find_element(*self.TAXI_ICON_LOCATOR).click()
-        except:
-            self.driver.find_element(*self.TAXI_ICON_LOCATOR_ACTIVE).click()
-
-    """
-    Name: click_bike_icon
-    Parameters: None
-    Return:
-
-
-    """
-    def click_bike_icon(self):
-        # Click bike Icon
-        self.driver.find_element(*self.BIKE_ICON_LOCATOR).click()
 
     """
     Name: click_call_taxi_button
@@ -847,4 +614,22 @@ class UrbanRoutesPage:
             print("Successfully selected card payment method")
         except:
             print("Failed to select card payment method")
+            
+    def is_business_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.BUSINESS_TARIFF_IND).get_attribute("class")
+
+    def is_sleepy_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.SLEEPY_TARIFF_IND).get_attribute("class")
+
+    def is_holiday_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.HOLIDAY_TARIFF_IND).get_attribute("class")
+
+    def is_talking_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.TALKING_TARIFF_IND).get_attribute("class")
+
+    def is_supportive_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.SUPPORTIVE_TARIFF_IND).get_attribute("class")
+
+    def is_glossy_tariff_card_selected(self):
+        return "active" in self.driver.find_element(*self.GLOSSY_TARIFF_IND).get_attribute("class")
 

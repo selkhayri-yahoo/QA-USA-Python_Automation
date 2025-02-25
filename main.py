@@ -72,8 +72,7 @@ class TestUrbanRoutes:
             print("Successfully set route")  #   "Log success"
 
         except Exception as e:
-            logging.log(logging.ERROR,
-                        f"Failed to set route. Exception: {traceback.format_exception(e)}.")  # Log failure
+            print(f"Failed to set route. Exception: {traceback.format_exception(e)}.")  # Log failure
 
 
         self.urban_routes_page.reload_page()    # Reload the Urban Routes page in preparation for the next test
@@ -87,36 +86,86 @@ class TestUrbanRoutes:
     This method tests the ability of the users to select their travel plan mode
     """
     def test_select_plan(self):
-        self.urban_routes_page.set_addresses()        # Set the "From" and "To" addresses
-        time.sleep(5)
-        self.urban_routes_page.click_optimal_option()   # Select the "Optimal" plan
-
+        self.urban_routes_page.call_taxi()
+        time.sleep(2)
+        
+        # Select business 
+        self.urban_routes_page.click_business_tariff_card()
+        time.sleep(2)
+        
+        # Verify that business has been selected
         try:
-            assert "active" in self.urban_routes_page.get_optimal_option_status()  # Check that the "Optimal" plan is now active
-            print("Successfully selected optimal plan")  # Log success
+            assert self.urban_routes_page.is_business_tariff_card_selected() == True
+            print("Selected business plan successfully")
         except:
-            print("Failed to select optimal plan")   # Log failure
-
-        time.sleep(5)
-
-        self.urban_routes_page.click_fastest_option()  # Select the "Fastest" plan
-
+            print("Failed to select business plan")
+        
+        time.sleep(2)        
+    
+        # Select sleepy
+        self.urban_routes_page.click_sleepy_tariff_card()
+        time.sleep(2)
+        
+        # Verify that sleepy has been selected
         try:
-            assert "active" in self.urban_routes_page.get_fastest_option_status()  # Check that the "Fastest" plan is now active
-            print("Successfully selected fastest plan")  # Log success
+            assert self.urban_routes_page.is_sleepy_tariff_card_selected() == True
+            print("Selected sleepy plan successfully")
         except:
-            print("Failed to select fastest plan")     # Log failure
-
-        self.urban_routes_page.click_custom_option()   # Select the "Custom" plan
-
+            print("Failed to select sleepy plan")
+        
+        # Select holiday
+        self.urban_routes_page.click_holiday_tariff_card()
+        time.sleep(2)
+        
+        # Verify that holiday has been selected
         try:
-            assert "active" in self.urban_routes_page.get_custom_option_status()  # Check that the "Custom" plan is now active
-            print("Successfully selected custom plan")   # Log success
+            assert self.urban_routes_page.is_holiday_tariff_card_selected() == True
+            print("Selected holiday plan successfully")
         except:
-            print("Failed to select custom plan")       # Log failure
-
+            print("Failed to select holiday plan")
+        
+        time.sleep(2)
+        
+        # Select talking
+        self.urban_routes_page.click_talking_tariff_card()
+        time.sleep(2)
+        
+        # Verify that talking has been selected
+        try:
+            assert self.urban_routes_page.is_talking_tariff_card_selected() == True
+            print("Selected talking plan successfully")
+        except:
+            print("Failed to select talking plan")
+        
+        time.sleep(2)
+        
+        # Select supportive
+        self.urban_routes_page.click_supportive_tariff_card()
+        time.sleep(2)
+                
+        # Verify that supportive has been selected
+        try:
+            assert self.urban_routes_page.is_supportive_tariff_card_selected() == True
+            print("Selected supportive plan successfully")
+    
+        except:
+            print("Failed to supportive glossy plan")
+        
+        time.sleep(2)
+        
+        # Select glossy
+        self.urban_routes_page.click_glossy_tariff_card()
+        time.sleep(2)
+        
+        # Verift that glossy has been selected
+        try:
+            assert self.urban_routes_page.is_glossy_tariff_card_selected() == True
+            print("Selected glossy plan successfully")
+        except:
+            print("Failed to select glossy plan")
+       
         self.urban_routes_page.reload_page()    # Reload the Urban Routes page in preparation for the next test
-
+            
     """
     Name: test_fill_phone_number
     Parameters: None
@@ -254,7 +303,7 @@ class TestUrbanRoutes:
         
         try:
             assert self.urban_routes_page.is_order_visible() == True    # Verify that the car selection dialog is displayed
-            print("Successfully shown car search model")
+            print("Successfully showed car search model")
         except Exception as e:
             print(f"Failed to show car search model. Error: {str(e)}")
         
@@ -268,15 +317,16 @@ class TestUrbanRoutes:
 
 test_urban_routes = TestUrbanRoutes()
 test_urban_routes.setup_class()
-
-# test_urban_routes.test_set_route()
-# test_urban_routes.test_select_plan()
-# test_urban_routes.test_fill_phone_number()
-# test_urban_routes.test_comment_for_driver()
-# test_urban_routes.test_order_blanket_and_handkerchiefs()
-test_urban_routes.test_order_2_ice_creams()
-
-# test_urban_routes.test_car_search_model_appears()
+"""
+test_urban_routes.test_set_route()
+test_urban_routes.test_select_plan()
+test_urban_routes.test_fill_phone_number()
+test_urban_routes.test_comment_for_driver()
+test_urban_routes.test_order_blanket_and_handkerchiefs()
+"""
+# test_urban_routes.test_order_2_ice_creams()
+time.sleep(10)
+test_urban_routes.test_car_search_model_appears()
 
 # test_urban_routes.test_fill_card()
 
