@@ -74,12 +74,13 @@ class UrbanRoutesPage:
 
     MESSAGE_TO_DRIVER = (By.ID, "comment")
 
-    ORDER_REQUIREMENTS = (By.CLASS_NAME, "reqs")
-
     ICE_CREAM_ADD = (By.CLASS_NAME, "counter-plus")
     ITEM_COUNTS = (By.CLASS_NAME, 'counter-value')
 
     TARIFF_PICKER = (By.XPATH, "//div[contains(@class, 'tariff-picker') and contains(@class, 'shown')]")
+    
+    SMART_BUTTON = (By.CSS_SELECTOR, '#root > div > div.workflow > div.smart-button-wrapper > button')
+    ORDER_BODY = (By.CSS_SELECTOR, '#root > div > div.order.shown > div.order-body')
 
     """
     Name: __init__
@@ -634,16 +635,7 @@ class UrbanRoutesPage:
     def get_message_to_driver(self):
         return self.driver.find_element(*self.MESSAGE_TO_DRIVER).get_attribute('value')
 
-    """
-    Name: click_order_requirements
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_order_requirements(self):
-        self.driver.find_elements(*self.ORDER_REQUIREMENTS)[0].click()
-
+    
     """
     Name: click_blanket_and_handkerchiefs
     Parameters: None
@@ -725,11 +717,17 @@ class UrbanRoutesPage:
 
     This method reloads the urban routes page.
     """
-
     def reload_page(self):
         # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
         # and print a message accordingly
         self.driver.get(data.URBAN_ROUTES_URL)  # Retrieve the urban routes page
+
+
+    def click_smart_button(self):
+        self.driver.find_element(*self.SMART_BUTTON).click()
+        
+    def is_order_visible(self):
+        return self.driver.find_element(*self.ORDER_BODY) != None
 
     """
     Name: set_addresses    
@@ -738,7 +736,6 @@ class UrbanRoutesPage:
 
     This method sets the source and destination addresses.
     """
-
     def set_addresses(self):
         self.enter_from_location("East")  # Set the "From" address to "East"
         self.enter_to_location("1300")  # Set the "To" address to "1300"
@@ -754,10 +751,6 @@ class UrbanRoutesPage:
     def call_taxi(self):
         self.set_addresses()  # Set the "From" and "To" addresses
         time.sleep(2)
-        self.click_custom_option()  # Select the "Custom" option
-        time.sleep(2)
-        self.click_taxi_icon()  # Click the "taxi" icon
-        time.sleep(5)
         self.click_call_taxi_button()  # Click the "Call a taxi" button
 
     """

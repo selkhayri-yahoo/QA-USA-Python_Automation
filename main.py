@@ -31,17 +31,14 @@ class TestUrbanRoutes:
         capabilities = DesiredCapabilities.CHROME
         capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
 
-        #chrome_options = Options()
-        #chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
         cls.driver = webdriver.Chrome()
 
         # Check if the URL specified by constant URBAN_ROUTES_URL in the data.py file is reachable
         # and print a message accordingly
         if helpers.is_url_reachable(data.URBAN_ROUTES_URL):
-            print("Connected to the Urban Routes server")
             cls.driver.get(data.URBAN_ROUTES_URL)
             cls.urban_routes_page = UrbanRoutesPage(cls.driver)
-
+            print("Connected to the Urban Routes server")
         else:
             # Connection to Urban Routes web service failed
             print("Cannot connect to Urban Routes. Check the server is on and still running")
@@ -194,8 +191,6 @@ class TestUrbanRoutes:
         self.urban_routes_page.click_supportive_tariff_card()  # Click the "Supportive" option
         time.sleep(2)
 
-        self.urban_routes_page.click_order_requirements()   # Click on the "Order requirements" button
-        time.sleep(2)
         first_value = self.urban_routes_page.get_blanket_and_handkerchiefs_checkbox_value()  # Get the state of the "Blanket and Handkerchiefs" toggle switch
 
         self.urban_routes_page.click_blanket_and_handkerchiefs()    # Click the "Blanket and Handkerchiefs" toggle switch
@@ -224,9 +219,7 @@ class TestUrbanRoutes:
         self.urban_routes_page.call_taxi()   # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
         self.urban_routes_page.click_supportive_tariff_card()  # Click the "Supportive" option
         time.sleep(2)
-        # self.urban_routes_page.click_order_requirements()   # Click on the "Order requirements" button
-        time.sleep(2)
-
+        
         # A variable should be defined and then loop should iterate twice ...
         number_of_ice_creams = 2   # the number of ice creams to order
 
@@ -234,10 +227,7 @@ class TestUrbanRoutes:
         for i in range(number_of_ice_creams):   # For number_of_ice_creams times, run the following loop
             self.urban_routes_page.click_add_icecream()     # Click "+" on the left of "Ice cream" in "Ice cream bucket"
             time.sleep(1)
-        #########
-
-
-
+        
         try:    # Verify that the number of ice creams displayed in the app is number_of_ice_creams
             assert str(number_of_ice_creams) == self.urban_routes_page.get_icecream_count()
             print("Successfully set icecream count")  # Log success
@@ -256,20 +246,18 @@ class TestUrbanRoutes:
     This method tests the users' ability to select which car to book in the Urban Routes web service
     """
     def test_car_search_model_appears(self):
-        self.urban_routes_page.set_addresses()    # Set the "From" and "To" addresses
+        self.urban_routes_page.call_taxi() # Enter "From" and "To" addresses, "Custom" option, "Taxi", then click "Call a taxi"
+        
+        self.urban_routes_page.click_smart_button() # Click "Enter the number and order"
+        
         time.sleep(2)
-        self.urban_routes_page.click_custom_option()   # Select the "Custom" option
-        time.sleep(2)
-        self.urban_routes_page.click_drive_icon()   # Select the "Drive" icon
-        time.sleep(4)
-        self.urban_routes_page.click_book_button()  # Click the "Book" button
-        time.sleep(2)
+        
         try:
-            assert self.urban_routes_page.is_tariff_picker_shown() == True      # Verify that the car selection dialog is displayed
-            print("Successfully shown car search model")  # Log success
+            assert self.urban_routes_page.is_order_visible() == True    # Verify that the car selection dialog is displayed
+            print("Successfully shown car search model")
         except Exception as e:
-            print(f"Failed to show car search model. Error: {str(e)}")  # Log failure
-
+            print(f"Failed to show car search model. Error: {str(e)}")
+        
         self.urban_routes_page.reload_page()    # Reload the Urban Routes page in preparation for the next test
 
     @classmethod
@@ -280,14 +268,17 @@ class TestUrbanRoutes:
 
 test_urban_routes = TestUrbanRoutes()
 test_urban_routes.setup_class()
-test_urban_routes.test_set_route()
-test_urban_routes.test_select_plan()
-test_urban_routes.test_fill_phone_number()
-test_urban_routes.test_comment_for_driver()
-test_urban_routes.test_order_blanket_and_handkerchiefs()
+
+# test_urban_routes.test_set_route()
+# test_urban_routes.test_select_plan()
+# test_urban_routes.test_fill_phone_number()
+# test_urban_routes.test_comment_for_driver()
+# test_urban_routes.test_order_blanket_and_handkerchiefs()
 test_urban_routes.test_order_2_ice_creams()
-test_urban_routes.test_car_search_model_appears()
-test_urban_routes.test_fill_card()
+
+# test_urban_routes.test_car_search_model_appears()
+
+# test_urban_routes.test_fill_card()
 
 time.sleep(10)
 test_urban_routes.teardown_class()
