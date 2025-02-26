@@ -1,8 +1,6 @@
 import time
 import traceback
 
-import logging
-
 import data      # import the data.py file which contains the constant values
 import helpers   # import the helpers.py file which contains networking functions
 
@@ -299,8 +297,6 @@ class TestUrbanRoutes:
         
         self.urban_routes_page.click_smart_button() # Click "Enter the number and order"
         
-        time.sleep(2)
-        
         try:
             assert self.urban_routes_page.is_order_visible() == True    # Verify that the car selection dialog is displayed
             print("Successfully showed car search model")
@@ -317,16 +313,15 @@ class TestUrbanRoutes:
 
 test_urban_routes = TestUrbanRoutes()
 test_urban_routes.setup_class()
-"""
+
 test_urban_routes.test_set_route()
 test_urban_routes.test_select_plan()
 test_urban_routes.test_fill_phone_number()
 test_urban_routes.test_comment_for_driver()
 test_urban_routes.test_order_blanket_and_handkerchiefs()
-"""
-# test_urban_routes.test_order_2_ice_creams()
-time.sleep(10)
+
 test_urban_routes.test_car_search_model_appears()
+test_urban_routes.test_order_2_ice_creams()
 
 # test_urban_routes.test_fill_card()
 
