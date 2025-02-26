@@ -323,7 +323,7 @@ test_urban_routes.test_order_blanket_and_handkerchiefs()
 test_urban_routes.test_car_search_model_appears()
 test_urban_routes.test_order_2_ice_creams()
 
-# test_urban_routes.test_fill_card()
+test_urban_routes.test_fill_card()
 
 time.sleep(10)
 test_urban_routes.teardown_class()

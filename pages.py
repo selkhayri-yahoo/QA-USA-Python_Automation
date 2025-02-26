@@ -85,32 +85,6 @@ class UrbanRoutesPage:
 
     
     """
-    Name: clear_from_location
-    Parameters: None
-    Return: None
-
-    This method clears the "From" address in the Urban Routes web interface
-    """
-    def clear_from_location(self):
-        self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.CONTROL + "a")
-        self.driver.find_element(*self.FROM_LOCATOR).send_keys(Keys.DELETE)
-
-
-    """
-    Name: from_location_error
-    Parameters: None
-    Return: None
-
-    This method detects if the data entered into the "From" address has caused
-    an error.
-    """
-    def from_location_error(self):
-        parent_div = self.driver.find_element(*self.FROM_LOCATOR_PARENT)
-        parent_div_class = parent_div.get_attribute("class")
-        return "error" in parent_div_class
-
-
-    """
     Name: get_from_location
     Parameters: None
     Return: The value in the "From" address field
@@ -134,32 +108,6 @@ class UrbanRoutesPage:
 
     
     """
-    Name: clear_to_location
-    Parameters: None
-    Return: None
-
-    This method clears the "To" address in the Urban Routes web interface
-    """
-    def clear_to_location(self):
-        self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.CONTROL + "a")
-        self.driver.find_element(*self.TO_LOCATOR).send_keys(Keys.DELETE)
-
-
-    """
-    Name: to_location_error
-    Parameters: None
-    Return: None
-
-    This method detects if the data entered into the "To" address has caused
-    an error.
-    """
-    def to_location_error(self):
-        parent_div = self.driver.find_element(*self.TO_LOCATOR_PARENT)
-        parent_div_class = parent_div.get_attribute("class")
-        return "error" in parent_div_class
-
-    
-    """
     Name: get_to_location
     Parameters: None
     Return: The value in the "To" address field
@@ -170,44 +118,45 @@ class UrbanRoutesPage:
         return self.driver.find_element(*self.TO_LOCATOR).get_attribute("value")
 
 
-
-
     """
     Name: click_call_taxi_button
     Parameters: None
     Return: None
 
-
+    This method clicks the "Call a taxi" button on the Urban Routes page
     """
     def click_call_taxi_button(self):
         self.driver.find_element(*self.CALL_TAXI_LOCATOR).click()
+
 
     """
     Name: click_business_tariff_card
     Parameters: None
     Return: None
 
-
+    This method clicks the "Business" tariff card on the Urban Routes page
     """
     def click_business_tariff_card(self):
         self.driver.find_element(*self.BUSINESS_TARIFF_CARD).click()
 
+    
     """
     Name: click_sleepy_tariff_card
     Parameters: None
     Return: None
 
-
+    This method clicks the "Sleepy" tariff card on the Urban Routes page
     """
     def click_sleepy_tariff_card(self):
         self.driver.find_element(*self.SLEEPY_TARIFF_CARD).click()
 
+    
     """
     Name: click_holiday_tariff_card
     Parameters: None
     Return: None
 
-
+    This method clicks the "Holiday" tariff card of the Urban Routes page
     """
     def click_holiday_tariff_card(self):
         self.driver.find_element(*self.HOLIDAY_TARIFF_CARD).click()
@@ -217,17 +166,18 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the "Talking" tariff card of the Urban Routes page
     """
     def click_talking_tariff_card(self):
         self.driver.find_element(*self.TALKING_TARIFF_CARD).click()
+
 
     """
     Name: click_supportive_tariff_card
     Parameters: None
     Return: None
 
-
+    This method clicks the "Supportive" tariff card of the Urban Routes page
     """
     def click_supportive_tariff_card(self):
         self.driver.find_element(*self.SUPPORTIVE_TARIFF_CARD).click()
@@ -237,7 +187,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the "Glossy" tariff card of the Urban Routes page
     """
     def click_glossy_tariff_card(self):
         self.driver.find_element(*self.GLOSSY_TARIFF_CARD).click()
@@ -247,47 +197,52 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the "Phone Number" button of the Urban Routes page
     """
     def click_phone_number_button(self):
         self.driver.find_element(*self.PHONE_NUMBER_BUTTON).click()
+
 
     """
     Name: set_phone_number_text
     Parameters: phone_number
     Return: None
 
-
+    This method sets the "Phone Number" field in the "Phone Number" dialog
     """
     def set_phone_number_text(self, phone_number):
         self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
 
+
     """
     Name: get_phone_number_text
     Parameters: None
-    Return:
+    Return: Phone number
 
-
+    This method retrieves the phone number that was entered into the "Phone 
+    number" dialog.
     """
     def get_phone_number_text(self):
         return self.driver.find_element(*self.PHONE_NUMBER_FIELD).get_attribute("value")
+
 
     """
     Name: click_phone_number_next
     Parameters: None
     Return: None
 
-
+    This method clicks the "Next" button on the "Phone number" dialog
     """
-    def click_phone_number_next(self):
-        self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
+    #def click_phone_number_next(self):
+    #    self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
+
 
     """
     Name: click_phone_number_close
     Parameters: None
     Return: None
 
-
+    This method clicks the "Close" button of the "Phone number" dialog
     """
     def click_phone_number_close(self):
         self.driver.find_element(*self.PHONE_CLOSE_BUTTON).click()
@@ -297,7 +252,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the "Payment Method" button on the Urban Routes page
     """
     def click_payment_method(self):
         self.driver.find_element(*self.PAYMENT_METHOD).click()
@@ -307,7 +262,8 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks on the "Add" credit card button of the payment methods
+    dialog
     """
     def click_add_credit_card(self):
         self.driver.find_elements(*self.PAYMENT_METHOD_CC_LOCATOR)[-1].click()
@@ -317,7 +273,8 @@ class UrbanRoutesPage:
     Parameters: credit_card_text
     Return: None
 
-
+    This method sets the credit card number field of the "Add Credit Card" 
+    dialog
     """
     def set_credit_card_text(self, credit_card_text):
         self.driver.find_element(*self.ADD_CARD_CC_NUM).send_keys(credit_card_text)
@@ -327,7 +284,7 @@ class UrbanRoutesPage:
     Parameters: code
     Return: None
 
-
+    This method sets the credit card code field of the "Add Credit Card" dialog
     """
     def set_credit_card_code(self, code):
         self.driver.find_elements(*self.ADD_CARD_CC_CODE)[1].send_keys(code)
@@ -337,7 +294,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the "submit" button of the "Add Credit Card" dialog
     """
     def submit_credit_card_add(self):
         self.driver.find_element(*self.ADD_CARD_SUBMIT_FORM).submit()
@@ -347,7 +304,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method selects the Cash Payment method
     """
     def select_cash_payment(self):
         self.driver.find_element(*self.SELECT_CASH).click()
@@ -357,7 +314,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method selects one of the available Credit Card payment methods
     """
     def select_cc_payment(self):
         self.driver.find_element(*self.SELECT_CC).click()
@@ -367,7 +324,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return:
 
-
+    This method retrieves and returns the selected payment method
     """
     def get_selected_payment_method(self):
         return self.driver.find_element(*self.SELECTED_PAYMENT_METHOD).text
@@ -377,7 +334,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method closes the "Payment Method" dialog
     """
     def close_payment_dialog(self):
         self.driver.find_element(*self.PAYMENT_DIALOG_CLOSE).click()
@@ -387,7 +344,7 @@ class UrbanRoutesPage:
     Parameters: message
     Return: None
 
-
+    This method populates the "Message to the driver..." text field
     """
     def send_message_to_driver(self, message):
         self.driver.find_element(*self.MESSAGE_TO_DRIVER).send_keys(message)
@@ -397,7 +354,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return:
 
-
+    This message gets the contents of the "Message to the driver..." text field
     """
     def get_message_to_driver(self):
         return self.driver.find_element(*self.MESSAGE_TO_DRIVER).get_attribute('value')
@@ -408,7 +365,7 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method clicks the toggle switch for "Blanket and handkerchiefs"
     """
     def click_blanket_and_handkerchiefs(self):
         self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_click)[0].click()
@@ -418,7 +375,8 @@ class UrbanRoutesPage:
     Parameters: None
     Return:
 
-
+    This method returns the state of the toggle switch for "Blanket and 
+    handkerchiefs"
     """
     def get_blanket_and_handkerchiefs_checkbox_value(self):
         switches = self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_read)
@@ -430,7 +388,8 @@ class UrbanRoutesPage:
     Parameters: None
     Return: None
 
-
+    This method increments the counter for "Ice cream" by clicking the adjacent
+    "+" button
     """
     def click_add_icecream(self):
         self.driver.find_element(*self.ICE_CREAM_ADD).click()
@@ -440,42 +399,22 @@ class UrbanRoutesPage:
     Parameters: None
     Return:
 
-
+    This method returns the value of the counter for "Ice cream"    
     """
     def get_icecream_count(self):
         return self.driver.find_elements(*self.ITEM_COUNTS)[0].text
 
-    """
-    Name: is_tariff_picker_shown
-    Parameters: None
-    Return:
-
-
-    """
-    def is_tariff_picker_shown(self):
-        tp = self.driver.find_element(*self.TARIFF_PICKER)
-
-        return tp != None
-
-    """
-    Name: click_add_cc_payment
-    Parameters: None
-    Return: None
-
-
-    """
-    def click_add_cc_payment(self):
-        self.driver.find_element(*self.PAYMENT_METHOD_CC_LOCATOR).click()
 
     """
     Name: close_payment_method_dialog
     Parameters: None
     Return: None
 
-
+    This method closes the "Payment method" dialog
     """
     def close_payment_method_dialog(self):
         self.driver.find_element(*self.PAYMENT_METHOD_CLOSE).click()
+
 
     """
     Name: reload_page    
@@ -490,11 +429,27 @@ class UrbanRoutesPage:
         self.driver.get(data.URBAN_ROUTES_URL)  # Retrieve the urban routes page
 
 
+    """
+    Name: click_smart_button    
+    Paramaters: None
+    Returns: None
+
+    This method clicks the "Enter the number and order" button.
+    """
     def click_smart_button(self):
         self.driver.find_element(*self.SMART_BUTTON).click()
-        
+
+
+    """
+    Name: is_order_visible    
+    Paramaters: None
+    Returns: None
+
+    This method return true if the "Car search" dialog is visible
+    """        
     def is_order_visible(self):
         return self.driver.find_element(*self.ORDER_BODY) != None
+
 
     """
     Name: set_addresses    
@@ -515,10 +470,12 @@ class UrbanRoutesPage:
     This method implements all the operations from setting the source and destination addresses to calling a taxi
     """
 
+
     def call_taxi(self):
         self.set_addresses()  # Set the "From" and "To" addresses
         time.sleep(2)
         self.click_call_taxi_button()  # Click the "Call a taxi" button
+
 
     """
     Name: set_phone_number    
@@ -527,12 +484,12 @@ class UrbanRoutesPage:
 
     This method sets the phone number field in the Phone number dialog box.
     """
-
     def set_phone_number(self, phone_number):
         time.sleep(5)
         self.click_phone_number_button()  # Open the "Phone number" dialog
         time.sleep(3)
         self.set_phone_number_text(phone_number)  # Set the "Phone number"
+
 
     """
     Name: get_phone_number    
@@ -541,11 +498,11 @@ class UrbanRoutesPage:
 
     This method gets the phone number the was entered into the Phone number dialog
     """
-
     def get_phone_number(self):
         self.click_phone_number_button()  # Open the "Phone number" dialog
         time.sleep(3)
         return self.get_phone_number_text()  # Retrieve and return the "Phone number" field
+
 
     """
     Name: add_credit_card_payment    
@@ -554,7 +511,6 @@ class UrbanRoutesPage:
 
     This method adds a credit card option in the Payment Methods dialog.
     """
-
     def add_credit_card_payment(self):
         # Open the "Payment Method" dialog
         self.click_payment_method()  # Open the "Payment Method" dialog
@@ -576,6 +532,7 @@ class UrbanRoutesPage:
         except:
             print("Failed to fill card: add credit card")  # log failure
 
+
     """
     Name: toggle_payment_method_selection
     Parameters: None
@@ -583,7 +540,6 @@ class UrbanRoutesPage:
 
     This method tests the ability to toggle between cash payment and credit card payment.
     """
-
     def toggle_payment_method_selection(self):
         # Select cash payment method
         self.click_payment_method()  # Open the "Payment method" dialog
@@ -614,22 +570,76 @@ class UrbanRoutesPage:
             print("Successfully selected card payment method")
         except:
             print("Failed to select card payment method")
-            
+
+
+    """
+    Name: is_business_tariff_card_selected   
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Business" tariff card is selected and False 
+    if not
+    """            
     def is_business_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.BUSINESS_TARIFF_IND).get_attribute("class")
 
+
+    """
+    Name: is_sleepy_tariff_card_selected    
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Sleepy" tariff card is selected and False 
+    if not
+    """
     def is_sleepy_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.SLEEPY_TARIFF_IND).get_attribute("class")
 
+
+    """
+    Name: is_holiday_tariff_card_selected    
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Holiday" tariff card is selected and False 
+    if not
+    """
     def is_holiday_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.HOLIDAY_TARIFF_IND).get_attribute("class")
 
+
+    """
+    Name: is_talking_tariff_card_selected    
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Talking" tariff card is selected and False 
+    if not
+    """
     def is_talking_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.TALKING_TARIFF_IND).get_attribute("class")
 
+
+    """
+    Name: is_supportive_tariff_card_selected    
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Supportive" tariff card is selected 
+    and False if not
+    """
     def is_supportive_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.SUPPORTIVE_TARIFF_IND).get_attribute("class")
 
+
+    """
+    Name: is_glossy_tariff_card_selected    
+    Parameters: None
+    Returns: None
+    
+    This method returns True if the "Glossy" tariff card is selected and False 
+    if not
+    """
     def is_glossy_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.GLOSSY_TARIFF_IND).get_attribute("class")
 
