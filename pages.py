@@ -617,4 +617,17 @@ class UrbanRoutesPage:
     """
     def is_glossy_tariff_card_selected(self):
         return "active" in self.driver.find_element(*self.GLOSSY_TARIFF_IND).get_attribute("class")
-
+    
+    
+    """
+    Name: order_ice_cream    
+    Parameters: number_of_ice_creams (integer)
+    Returns: None
+    
+    This method orders as many icecreams as specified by the number_of_ice_creams
+    parameter.
+    """
+    def order_ice_cream(self, number_of_ice_creams: int):
+        for i in range(number_of_ice_creams):   # For number_of_ice_creams times, run the following loop
+            self.click_add_icecream()
+            time.sleep(2)

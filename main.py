@@ -270,10 +270,9 @@ class TestUrbanRoutes:
         # A variable should be defined and then loop should iterate twice ...
         number_of_ice_creams = 2   # the number of ice creams to order
 
-        # move this to pages.py
-        for i in range(number_of_ice_creams):   # For number_of_ice_creams times, run the following loop
-            self.urban_routes_page.click_add_icecream()     # Click "+" on the left of "Ice cream" in "Ice cream bucket"
-            time.sleep(1)
+        # Call the order_ice_cream method of the UrbanRoutesPage class with
+        # number_of _ice_creams as a parameter to order 2 ice creams
+        self.urban_routes_page.order_ice_cream(number_of_ice_creams)
         
         try:    # Verify that the number of ice creams displayed in the app is number_of_ice_creams
             assert str(number_of_ice_creams) == self.urban_routes_page.get_icecream_count()
