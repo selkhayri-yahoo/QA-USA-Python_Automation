@@ -204,40 +204,6 @@ class UrbanRoutesPage:
 
 
     """
-    Name: set_phone_number_text
-    Parameters: phone_number
-    Return: None
-
-    This method sets the "Phone Number" field in the "Phone Number" dialog
-    """
-    def set_phone_number_text(self, phone_number):
-        self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)
-
-
-    """
-    Name: get_phone_number_text
-    Parameters: None
-    Return: Phone number
-
-    This method retrieves the phone number that was entered into the "Phone 
-    number" dialog.
-    """
-    def get_phone_number_text(self):
-        return self.driver.find_element(*self.PHONE_NUMBER_FIELD).get_attribute("value")
-
-
-    """
-    Name: click_phone_number_next
-    Parameters: None
-    Return: None
-
-    This method clicks the "Next" button on the "Phone number" dialog
-    """
-    #def click_phone_number_next(self):
-    #    self.driver.find_element(*self.PHONE_NUMBER_NEXT_BUTTON).click()
-
-
-    """
     Name: click_phone_number_close
     Parameters: None
     Return: None
@@ -289,6 +255,7 @@ class UrbanRoutesPage:
     def set_credit_card_code(self, code):
         self.driver.find_elements(*self.ADD_CARD_CC_CODE)[1].send_keys(code)
 
+
     """
     Name: submit_credit_card_add
     Parameters: None
@@ -298,6 +265,7 @@ class UrbanRoutesPage:
     """
     def submit_credit_card_add(self):
         self.driver.find_element(*self.ADD_CARD_SUBMIT_FORM).submit()
+
 
     """
     Name: select_cash_payment
@@ -309,6 +277,7 @@ class UrbanRoutesPage:
     def select_cash_payment(self):
         self.driver.find_element(*self.SELECT_CASH).click()
 
+
     """
     Name: select_cc_payment
     Parameters: None
@@ -318,6 +287,7 @@ class UrbanRoutesPage:
     """
     def select_cc_payment(self):
         self.driver.find_element(*self.SELECT_CC).click()
+
 
     """
     Name: get_selected_payment_method
@@ -329,6 +299,7 @@ class UrbanRoutesPage:
     def get_selected_payment_method(self):
         return self.driver.find_element(*self.SELECTED_PAYMENT_METHOD).text
 
+
     """
     Name: close_payment_dialog
     Parameters: None
@@ -339,6 +310,7 @@ class UrbanRoutesPage:
     def close_payment_dialog(self):
         self.driver.find_element(*self.PAYMENT_DIALOG_CLOSE).click()
 
+
     """
     Name: send_message_to_driver
     Parameters: message
@@ -348,6 +320,7 @@ class UrbanRoutesPage:
     """
     def send_message_to_driver(self, message):
         self.driver.find_element(*self.MESSAGE_TO_DRIVER).send_keys(message)
+
 
     """
     Name: get_message_to_driver
@@ -370,6 +343,7 @@ class UrbanRoutesPage:
     def click_blanket_and_handkerchiefs(self):
         self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_click)[0].click()
 
+
     """
     Name: get_blanket_and_handkerchiefs_checkbox_value
     Parameters: None
@@ -382,6 +356,7 @@ class UrbanRoutesPage:
         switches = self.driver.find_elements(*self.BLANKET_AND_HANDKERCHIEFS_read)
 
         return switches[0].is_selected()
+
 
     """
     Name: click_add_icecream
@@ -488,7 +463,7 @@ class UrbanRoutesPage:
         time.sleep(5)
         self.click_phone_number_button()  # Open the "Phone number" dialog
         time.sleep(3)
-        self.set_phone_number_text(phone_number)  # Set the "Phone number"
+        self.driver.find_element(*self.PHONE_NUMBER_FIELD).send_keys(phone_number)  # Set the "Phone number"
 
 
     """
@@ -501,7 +476,7 @@ class UrbanRoutesPage:
     def get_phone_number(self):
         self.click_phone_number_button()  # Open the "Phone number" dialog
         time.sleep(3)
-        return self.get_phone_number_text()  # Retrieve and return the "Phone number" field
+        return self.driver.find_element(*self.PHONE_NUMBER_FIELD).get_attribute("value")  # Retrieve and return the "Phone number" field
 
 
     """
