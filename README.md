@@ -1,4 +1,4 @@
-# QA-USA_Python_Automation
+# QA-USA-Python_Automation
 TripleTen - Sprint 7 - Project
 
 # This application is used by people to send navigation requests to the Urban Routes web service.
